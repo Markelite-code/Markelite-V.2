@@ -1,0 +1,473 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <script src="js/theme-init.js"></script>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' cdn.jsdelivr.net cdnjs.cloudflare.com www.googletagmanager.com www.google-analytics.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' *.supabase.co wss://*.supabase.co www.google-analytics.com analytics.google.com; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self';">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tu propuesta está en camino — Markelite</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rem:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Syne:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+
+  <style>
+    body {
+      background: var(--brand-black);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px var(--container-pad) 48px;
+    }
+
+    .g-logo {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--brand-white);
+      position: fixed;
+      top: 24px;
+      left: var(--container-pad);
+    }
+    .g-logo .dot { color: var(--brand-yellow); }
+
+    /* ─ Hero ─ */
+    .g-hero {
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .g-check {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(235,235,129,0.1);
+      border: 2px solid var(--brand-yellow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto var(--space-lg);
+      animation: pulse-ring 2.2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-ring {
+      0%,100% { box-shadow: 0 0 0 0 rgba(235,235,129,0.25); }
+      50%      { box-shadow: 0 0 0 14px rgba(235,235,129,0); }
+    }
+
+    .g-eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--brand-yellow);
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .g-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5.5vw, 3rem);
+      font-weight: 700;
+      color: var(--brand-white);
+      line-height: 1.1;
+      margin-bottom: var(--space-md);
+    }
+
+    .g-hero p {
+      font-family: var(--font-body);
+      font-size: 1.0625rem;
+      color: var(--gray-mid);
+      line-height: 1.65;
+      margin-bottom: var(--space-xl);
+    }
+
+    /* ─ Resumen personalizado ─ */
+    .g-resumen {
+      max-width: 600px;
+      width: 100%;
+      margin-bottom: var(--space-xl);
+    }
+
+    .g-resumen-title {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray-mid);
+      margin-bottom: var(--space-sm);
+    }
+
+    .g-stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .g-stat {
+      background: rgba(235,235,129,0.06);
+      border: 1px solid rgba(235,235,129,0.14);
+      border-radius: 12px;
+      padding: 18px 12px;
+      text-align: center;
+    }
+
+    .g-stat-val {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--brand-yellow);
+      line-height: 1;
+    }
+
+    .g-stat-lbl {
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      color: var(--gray-mid);
+      margin-top: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .g-servicios-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .g-servicio-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px;
+      padding: 11px 14px;
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      color: var(--brand-white);
+    }
+
+    .g-servicio-row span:first-child { font-size: 1.125rem; }
+
+    .g-plan-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(235,235,129,0.1);
+      border: 1px solid rgba(235,235,129,0.25);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--brand-yellow);
+      margin-bottom: var(--space-lg);
+    }
+
+    /* ─ Pasos ─ */
+    .g-pasos {
+      max-width: 600px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: var(--space-xl);
+    }
+
+    .g-paso {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px;
+      padding: var(--space-md);
+    }
+
+    .g-paso-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--brand-yellow);
+      color: var(--brand-black);
+      font-family: var(--font-display);
+      font-size: 0.8125rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .g-paso-body { flex: 1; }
+
+    .g-paso-when {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--brand-yellow);
+      margin-bottom: 4px;
+    }
+
+    .g-paso-text {
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      color: var(--brand-white);
+      line-height: 1.5;
+    }
+
+    /* ─ CTA ─ */
+    .g-cta-wrap {
+      text-align: center;
+    }
+
+    .g-cta {
+      display: inline-block;
+      background: var(--brand-yellow);
+      color: var(--brand-black);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 14px 32px;
+      border-radius: var(--radius-sm);
+      transition: all 0.2s;
+      margin-bottom: var(--space-sm);
+    }
+
+    .g-cta:hover { background: var(--brand-yellow-warm); transform: translateY(-1px); }
+
+    .g-micro {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      color: rgba(136,135,128,0.45);
+    }
+
+    /* ─ Fallback genérico (sin sessionStorage) ─ */
+    .g-fallback { display: none; }
+
+    @media (max-width: 480px) {
+      .g-stats-row { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .g-stat-val { font-size: 1.125rem; }
+    }
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9XCY1FMESR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9XCY1FMESR');
+  </script>
+</head>
+<body>
+
+  <a href="index.html" class="g-logo">Markelite<span class="dot">.</span></a>
+
+  <div class="g-check" id="g-check">✓</div>
+
+  <!-- HERO -->
+  <div class="g-hero" id="g-hero">
+    <span class="g-eyebrow">Diagnóstico recibido</span>
+    <h1 id="g-titulo">Lo recibimos.<br>Prepárate.</h1>
+    <p id="g-desc">Revisamos tu diagnóstico y en menos de 24 horas tienes una propuesta real con precios exactos para tu negocio.</p>
+  </div>
+
+  <!-- RESUMEN PERSONALIZADO (se rellena con JS) -->
+  <div class="g-resumen" id="g-resumen" style="display:none">
+    <div class="g-resumen-title">Tu diagnóstico</div>
+    <div class="g-stats-row">
+      <div class="g-stat">
+        <div class="g-stat-val" id="g-horas">—</div>
+        <div class="g-stat-lbl">horas / semana</div>
+      </div>
+      <div class="g-stat">
+        <div class="g-stat-val" id="g-roi">—</div>
+        <div class="g-stat-lbl">recuperados / mes</div>
+      </div>
+      <div class="g-stat">
+        <div class="g-stat-val" id="g-servicios-n">—</div>
+        <div class="g-stat-lbl">servicios sugeridos</div>
+      </div>
+    </div>
+    <div class="g-servicios-list" id="g-servicios-list"></div>
+    <div id="g-plan-chip" class="g-plan-chip" style="display:none">
+      <span>⚡</span><span id="g-plan-label">Plan Crecimiento</span>
+    </div>
+  </div>
+
+  <!-- PASOS -->
+  <div class="g-pasos">
+    <div class="g-paso">
+      <div class="g-paso-num">1</div>
+      <div class="g-paso-body">
+        <div class="g-paso-when">Hoy mismo</div>
+        <div class="g-paso-text">Recibimos tu diagnóstico y lo analizamos con el sistema de IA de Markelite.</div>
+      </div>
+    </div>
+    <div class="g-paso">
+      <div class="g-paso-num">2</div>
+      <div class="g-paso-body">
+        <div class="g-paso-when">En 24 horas</div>
+        <div class="g-paso-text" id="g-paso2">Te enviamos una propuesta específica con los procesos exactos que podemos automatizar para tu negocio, con precios y plazos.</div>
+      </div>
+    </div>
+    <div class="g-paso">
+      <div class="g-paso-num">3</div>
+      <div class="g-paso-body">
+        <div class="g-paso-when">Si decides avanzar</div>
+        <div class="g-paso-text">Empezamos implementación esa misma semana. Sin demoras.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="g-cta-wrap">
+    <a href="index.html" class="g-cta">Volver al inicio →</a>
+    <span class="g-micro" id="g-micro">Revisa tu WhatsApp o email. Ahí llegará tu propuesta.</span>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script>
+  (function () {
+    const SERVICIO_INFO = {
+      agente_ia:        { label: 'Agente IA 24/7',        icon: '💬' },
+      crm:              { label: 'CRM + Leads',            icon: '🗂️' },
+      automatizaciones: { label: 'Automatizaciones',       icon: '⚙️' },
+      propuestas:       { label: 'Propuestas automáticas', icon: '📄' },
+      cobros:           { label: 'Cobros automáticos',     icon: '💳' },
+      reportes:         { label: 'Reportes automáticos',   icon: '📊' },
+      reputacion:       { label: 'Gestión de reputación',  icon: '⭐' },
+      onboarding:       { label: 'Onboarding',             icon: '🚀' },
+      saas:             { label: 'App a medida',           icon: '💻' },
+      sistema_ia:       { label: 'Sistema IA completo',    icon: '🤖' },
+    };
+
+    function fmtCLP(n) {
+      if (n >= 1e6) return '$' + (n/1e6).toFixed(1).replace('.0','') + 'M';
+      if (n >= 1e3) return '$' + Math.round(n/1e3) + 'K';
+      return '$' + n;
+    }
+
+    function esc(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    }
+
+    // Cargar datos: primero sessionStorage, luego DB por ?id=UUID
+    let data = null;
+    try { data = JSON.parse(sessionStorage.getItem('mkl_diag') || 'null'); } catch(e) {}
+
+    const urlId = new URLSearchParams(window.location.search).get('id');
+    if (!data && urlId && window.MklWeb) {
+      window.MklWeb.getDiagnosticoById(urlId).then(dbData => {
+        if (dbData) renderDiag({
+          diagnostico: {
+            servicios   : dbData.servicios_json || [],
+            plan        : dbData.plan_recomendado,
+            roi_mensual : dbData.roi_estimado || 0,
+            horas_semana: Math.round((dbData.roi_estimado || 0) / 12000) || '—',
+          },
+          contacto: { canal: dbData.canal_preferido },
+          nombre  : dbData.nombre,
+        });
+      });
+    }
+
+    if (data && data.diagnostico) { renderDiag(data); }
+
+    function renderDiag(data) {
+      if (!data || !data.diagnostico) return;
+      const d   = data.diagnostico;
+      const con = data.contacto || {};
+      const nombre = data.nombre || con.nombre || '';
+
+      // Título personalizado
+      const tit = document.getElementById('g-titulo');
+      if (tit && nombre) tit.innerHTML = `${esc(nombre.split(' ')[0])},<br>ya está en camino.`;
+
+      // Descripción según canal
+      const desc = document.getElementById('g-desc');
+      const CANAL = { whatsapp: 'WhatsApp', email: 'email', instagram: 'Instagram' };
+      const canalLabel = CANAL[con.canal] || 'tu contacto';
+      if (desc) desc.textContent = `Te mandamos la propuesta completa por ${canalLabel} en menos de 24 horas. Con servicios exactos, precios y plazos.`;
+
+      // Micro
+      const micro = document.getElementById('g-micro');
+      if (micro) micro.textContent = `Revisa tu ${canalLabel}. Ahí llega tu propuesta.`;
+
+      // Paso 2 personalizado
+      const p2 = document.getElementById('g-paso2');
+      if (p2 && d.servicios && d.servicios.length) {
+        const top = d.servicios.slice(0,2).map(s => SERVICIO_INFO[s]?.label || s).join(' y ');
+        p2.textContent = `Preparamos tu propuesta con ${top} entre los primeros servicios, con precios y plazos reales.`;
+      }
+
+      // Stats
+      const hEl = document.getElementById('g-horas');
+      const rEl = document.getElementById('g-roi');
+      const nEl = document.getElementById('g-servicios-n');
+      if (hEl) hEl.textContent = d.horas_semana === '—' ? '—' : `${d.horas_semana}h`;
+      if (rEl) rEl.textContent = fmtCLP(d.roi_mensual);
+      if (nEl) nEl.textContent = d.servicios ? d.servicios.length : '—';
+
+      // Lista servicios (top 4)
+      const listEl = document.getElementById('g-servicios-list');
+      if (listEl && d.servicios) {
+        listEl.innerHTML = d.servicios.slice(0,4).map(s => {
+          const info = SERVICIO_INFO[s] || { icon: '✓', label: esc(s) };
+          return `<div class="g-servicio-row"><span>${info.icon}</span><span>${info.label}</span></div>`;
+        }).join('');
+        if (d.servicios.length > 4) {
+          listEl.innerHTML += `<div style="font-size:0.8125rem;color:var(--gray-mid);padding:6px 14px">+${d.servicios.length - 4} servicios más en tu propuesta</div>`;
+        }
+      }
+
+      // Plan chip
+      const planChip = document.getElementById('g-plan-chip');
+      const planLabel = document.getElementById('g-plan-label');
+      if (planChip && planLabel && d.plan) {
+        planLabel.textContent = `Plan ${d.plan} recomendado`;
+        planChip.style.display = 'inline-flex';
+      }
+
+      // Mostrar bloque resumen
+      const resumen = document.getElementById('g-resumen');
+      if (resumen) resumen.style.display = 'block';
+    }
+
+    // Animar entrada
+    if (typeof gsap !== 'undefined') {
+      const els = ['#g-check','#g-hero','.g-resumen','#g-resumen','.g-pasos','.g-cta-wrap'];
+      gsap.set(els, { opacity: 0, y: 28 });
+      const tl = gsap.timeline({ delay: 0.15 });
+      tl.to('#g-check',     { opacity:1, y:0, scale:1, duration:0.55, ease:'back.out(1.4)' })
+        .to('#g-hero',      { opacity:1, y:0, duration:0.5, ease:'power2.out' }, '-=0.2')
+        .to('#g-resumen',   { opacity:1, y:0, duration:0.5, ease:'power2.out' }, '-=0.2')
+        .to('.g-pasos',     { opacity:1, y:0, duration:0.5, ease:'power2.out' }, '-=0.2')
+        .to('.g-cta-wrap',  { opacity:1, y:0, duration:0.4, ease:'power2.out' }, '-=0.15');
+    }
+
+    // Limpiar sessionStorage
+    try { sessionStorage.removeItem('mkl_diag'); } catch(e) {}
+  })();
+  </script>
+  <script src="js/analytics.js"></script>
+</body>
+</html>

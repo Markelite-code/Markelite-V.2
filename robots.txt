@@ -1,0 +1,10 @@
+﻿User-agent: *
+Allow: /
+
+# No indexar páginas de app/auth
+Disallow: /dashboard.html
+Disallow: /login.html
+Disallow: /signup.html
+
+# Sitemap
+Sitemap: https://markelite.cl/sitemap.xml

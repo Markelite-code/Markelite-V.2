@@ -1,0 +1,523 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <script src="js/theme-init.js"></script>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' cdn.jsdelivr.net cdnjs.cloudflare.com www.googletagmanager.com www.google-analytics.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' *.supabase.co wss://*.supabase.co www.google-analytics.com analytics.google.com; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self';">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crear cuenta — Markelite</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rem:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Syne:wght@400;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/variables.css" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--brand-black);
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* ── LEFT PANEL ── */
+    .auth-left {
+      background: linear-gradient(160deg, #0d1117 0%, var(--brand-black) 60%);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .auth-left::before {
+      content: '';
+      position: absolute;
+      bottom: -100px;
+      right: -80px;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(235,235,129,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .auth-brand {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--brand-white);
+      text-decoration: none;
+    }
+
+    .auth-brand .logo-dot { color: var(--brand-yellow); }
+
+    .auth-left-content { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+
+    .auth-left-tag {
+      display: inline-block;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--brand-yellow);
+      background: rgba(235,235,129,0.1);
+      padding: 5px 12px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .auth-left h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 700;
+      color: var(--brand-white);
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .auth-left h2 span { color: var(--brand-yellow); }
+
+    .auth-left p {
+      font-size: 0.9375rem;
+      color: var(--gray-mid);
+      line-height: 1.65;
+      max-width: 380px;
+      margin-bottom: 28px;
+    }
+
+    .steps-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--brand-yellow);
+      color: var(--brand-black);
+      font-family: var(--font-display);
+      font-size: 0.8125rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-text {
+      font-size: 0.875rem;
+      color: rgba(238,239,238,0.8);
+      line-height: 1.5;
+    }
+
+    .step-text strong {
+      color: var(--brand-white);
+      display: block;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .auth-guarantee {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 32px;
+      padding: 14px 18px;
+      background: rgba(235,235,129,0.06);
+      border: 1px solid rgba(235,235,129,0.15);
+      border-radius: 10px;
+      font-size: 0.8125rem;
+      color: rgba(238,239,238,0.75);
+    }
+
+    /* ── RIGHT PANEL ── */
+    .auth-right {
+      background: #F4F3ED;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 40px;
+      overflow-y: auto;
+    }
+
+    .auth-form-box {
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .auth-form-box h1 {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--brand-black);
+      margin-bottom: 6px;
+    }
+
+    .auth-form-box .auth-subtitle {
+      font-size: 0.9375rem;
+      color: var(--gray-mid);
+      margin-bottom: 28px;
+    }
+
+    .auth-form-box .auth-subtitle a {
+      color: var(--brand-black);
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .form-label {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray-mid);
+    }
+
+    .form-input {
+      background: #FFFFFF;
+      border: 1.5px solid rgba(0,0,0,0.1);
+      color: var(--brand-black);
+      border-radius: 10px;
+      padding: 13px 16px;
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+    }
+
+    .form-input:focus {
+      border-color: var(--brand-yellow);
+      box-shadow: 0 0 0 3px rgba(235,235,129,0.2);
+    }
+
+    .form-input::placeholder { color: rgba(5,8,12,0.3); }
+
+    .form-select {
+      background: #FFFFFF url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888780' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 14px center;
+      border: 1.5px solid rgba(0,0,0,0.1);
+      color: var(--brand-black);
+      border-radius: 10px;
+      padding: 13px 36px 13px 16px;
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+      appearance: none;
+      cursor: pointer;
+    }
+
+    .form-select:focus {
+      border-color: var(--brand-yellow);
+      box-shadow: 0 0 0 3px rgba(235,235,129,0.2);
+    }
+
+    .password-hint {
+      font-size: 0.6875rem;
+      color: var(--gray-mid);
+      margin-top: 4px;
+    }
+
+    .form-terms {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.8125rem;
+      color: var(--gray-mid);
+      line-height: 1.45;
+      margin-bottom: 20px;
+      cursor: pointer;
+    }
+
+    .form-terms input[type="checkbox"] {
+      accent-color: var(--brand-black);
+      width: 15px;
+      height: 15px;
+      margin-top: 1px;
+      flex-shrink: 0;
+    }
+
+    .form-terms a {
+      color: var(--brand-black);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .auth-submit {
+      width: 100%;
+      background: var(--brand-black);
+      color: var(--brand-white);
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      padding: 15px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      margin-bottom: 16px;
+    }
+
+    .auth-submit:hover:not(:disabled) {
+      background: #1a1d24;
+      transform: translateY(-1px);
+    }
+
+    .auth-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .auth-error {
+      background: rgba(255,107,107,0.1);
+      border: 1px solid rgba(255,107,107,0.3);
+      color: #cc3333;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.8125rem;
+      margin-bottom: 16px;
+      display: none;
+    }
+
+    .auth-error.visible { display: block; }
+
+    .auth-back {
+      display: block;
+      text-align: center;
+      font-size: 0.8125rem;
+      color: var(--gray-mid);
+      margin-top: 4px;
+    }
+
+    .auth-back a {
+      color: var(--brand-black);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    @media (max-width: 768px) {
+      body { grid-template-columns: 1fr; }
+      .auth-left { display: none; }
+      .auth-right { padding: 40px 24px; align-items: flex-start; padding-top: 60px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9XCY1FMESR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9XCY1FMESR');
+  </script>
+</head>
+<body>
+
+  <!-- Left panel -->
+  <div class="auth-left">
+    <a href="index.html" class="auth-brand">Markelite<span class="logo-dot">.</span></a>
+
+    <div class="auth-left-content">
+      <span class="auth-left-tag">Empieza hoy</span>
+      <h2>Tu negocio<br><span>automatizado</span><br>esta semana.</h2>
+      <p>Crea tu cuenta y en menos de 48 horas tendrás un sistema completo trabajando por ti.</p>
+
+      <div class="steps-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-text">
+            <strong>Completa el formulario</strong>
+            Cuéntanos sobre tu negocio.
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-text">
+            <strong>Diagnóstico personalizado</strong>
+            Te enviamos una propuesta en 24 horas.
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-text">
+            <strong>Implementación en 48 horas</strong>
+            Tu sistema activo y tu negocio funcionando solo.
+          </div>
+        </div>
+      </div>
+
+      <div class="auth-guarantee">
+        🔒 Sin tarjeta de crédito · Sin compromiso · Diagnóstico gratuito
+      </div>
+    </div>
+
+    <div style="font-size:0.75rem; color:rgba(136,135,128,0.5)">© 2026 Markelite SpA · Chile</div>
+  </div>
+
+  <!-- Right panel -->
+  <div class="auth-right">
+    <div class="auth-form-box">
+      <h1>Crear cuenta gratis</h1>
+      <p class="auth-subtitle">¿Ya tienes cuenta? <a href="login.html">Ingresar</a></p>
+
+      <div class="auth-error" id="signup-error">Hubo un error. Por favor intenta de nuevo.</div>
+
+      <form id="signup-form" novalidate>
+        <div class="form-row">
+          <div class="form-field">
+            <label class="form-label" for="signup-name">Nombre</label>
+            <input class="form-input" type="text" id="signup-name" placeholder="Juan" autocomplete="given-name" required />
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="signup-lastname">Apellido</label>
+            <input class="form-input" type="text" id="signup-lastname" placeholder="Pérez" autocomplete="family-name" />
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="signup-business">Nombre del negocio</label>
+          <input class="form-input" type="text" id="signup-business" placeholder="Clínica Dental San Marcos" required />
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="signup-rubro">Rubro</label>
+          <select class="form-select" id="signup-rubro" required>
+            <option value="" disabled selected>Selecciona tu rubro</option>
+            <option>Salud y clínicas</option>
+            <option>Belleza y estética</option>
+            <option>Inmobiliaria</option>
+            <option>Educación y cursos</option>
+            <option>E-commerce</option>
+            <option>Consultoría y servicios</option>
+            <option>Restaurantes y gastronomía</option>
+            <option>Otro</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="signup-email">Correo electrónico</label>
+          <input class="form-input" type="email" id="signup-email" placeholder="juan@empresa.com" autocomplete="email" required />
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="signup-password">Contraseña</label>
+          <input class="form-input" type="password" id="signup-password" placeholder="••••••••" autocomplete="new-password" required minlength="8" />
+          <span class="password-hint">Mínimo 8 caracteres</span>
+        </div>
+
+        <label class="form-terms">
+          <input type="checkbox" id="signup-terms" required />
+          Acepto los <a href="politica-privacidad.html">términos de uso y política de privacidad</a> de Markelite.
+        </label>
+
+        <button type="submit" class="auth-submit" id="signup-submit">Crear cuenta gratis</button>
+      </form>
+
+      <span class="auth-back">← <a href="index.html">Volver al inicio</a></span>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script>
+    (function () {
+      MklAuth.getSession().then(s => { if (s) window.location.href = 'dashboard.html'; });
+
+      const form      = document.getElementById('signup-form');
+      const errorEl   = document.getElementById('signup-error');
+      const submitBtn = document.getElementById('signup-submit');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        errorEl.classList.remove('visible');
+
+        const name     = document.getElementById('signup-name').value.trim();
+        const last     = document.getElementById('signup-lastname').value.trim();
+        const business = document.getElementById('signup-business').value.trim();
+        const rubro    = document.getElementById('signup-rubro').value;
+        const email    = document.getElementById('signup-email').value.trim().toLowerCase();
+        const password = document.getElementById('signup-password').value;
+        const terms    = document.getElementById('signup-terms').checked;
+        const fullName = `${name} ${last}`.trim();
+
+        if (!name || !business || !rubro || !email || !password || !terms) {
+          errorEl.textContent = 'Por favor completa todos los campos requeridos.';
+          errorEl.classList.add('visible');
+          return;
+        }
+        if (password.length < 8) {
+          errorEl.textContent = 'La contraseña debe tener al menos 8 caracteres.';
+          errorEl.classList.add('visible');
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Creando cuenta...';
+
+        try {
+          if (window.mklDB) {
+            const { data, error } = await window.mklDB.auth.signUp({
+              email,
+              password,
+              options: {
+                data: { full_name: fullName, business, rubro, plan: 'Básico' }
+              }
+            });
+            if (error) throw error;
+            // Notificar a Vicente via n8n
+            fetch('https://markelite.app.n8n.cloud/webhook/signup', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ name: fullName, business, rubro, email, ts: new Date().toISOString() })
+            }).catch(() => {});
+          }
+
+          localStorage.setItem('mk_session', JSON.stringify({
+            email, name: fullName, business, rubro, ts: Date.now(), isNew: true
+          }));
+          window.location.href = 'dashboard.html';
+        } catch (err) {
+          const msg = err.message || '';
+          errorEl.textContent = msg.includes('already registered')
+            ? 'Este correo ya tiene una cuenta. Ingresa en vez de registrarte.'
+            : 'Ocurrió un error al crear tu cuenta. Intenta de nuevo.';
+          errorEl.classList.add('visible');
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Crear cuenta gratis';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <script src="js/theme-init.js"></script>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' cdn.jsdelivr.net cdnjs.cloudflare.com www.googletagmanager.com www.google-analytics.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' *.supabase.co wss://*.supabase.co www.google-analytics.com analytics.google.com; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self';">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Diagnóstico gratuito — Descubre qué procesos de tu negocio podemos automatizar. 10 minutos. Sin compromiso." />
+  <title>Diagnóstico Gratuito — Markelite</title>
+  <link rel="canonical" href="https://markelite.cl/diagnostico.html" />
+  <meta property="og:title" content="Diagnóstico Gratuito de Automatización — Markelite" />
+  <meta property="og:description" content="10 minutos. Sin compromiso. Descubre exactamente qué procesos de tu negocio podemos automatizar con IA." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://markelite.cl/diagnostico.html" />
+  <meta property="og:image" content="https://markelite.cl/images/logo-blanco.png" />
+  <meta property="og:locale" content="es_CL" />
+  <meta property="og:site_name" content="Markelite" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Diagnóstico Gratuito de Automatización — Markelite" />
+  <meta name="twitter:description" content="10 minutos. Sin compromiso. Descubre qué procesos automatizar en tu negocio con IA." />
+  <meta name="twitter:image" content="https://markelite.cl/images/logo-blanco.png" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rem:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Syne:wght@400;700&display=swap" rel="stylesheet" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/diagnostico.css" />
+  <link rel="stylesheet" href="css/chatbot.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+
+  <style>
+    body { background: var(--brand-black); }
+
+    .diag-navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 20px var(--container-pad);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .diag-logo {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--brand-white);
+    }
+
+    .diag-logo .logo-dot { color: var(--brand-yellow); }
+
+    .diag-back {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      color: var(--gray-mid);
+      transition: var(--transition-fast);
+    }
+
+    .diag-back:hover { color: var(--brand-white); }
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9XCY1FMESR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9XCY1FMESR');
+  </script>
+</head>
+<body class="diag-page">
+
+  <!-- Minimal navbar -->
+  <div class="diag-navbar">
+    <a href="index.html" class="diag-logo">Markelite<span class="logo-dot">.</span></a>
+    <a href="index.html" class="diag-back">← Volver al inicio</a>
+  </div>
+
+  <!-- Diagnóstico App -->
+  <div id="diagnostico-app">
+    <div class="diag-progress">
+      <div class="progress-dots" id="progress-dots"></div>
+      <div id="diag-step-count"></div>
+    </div>
+
+    <div class="diag-slides" id="diag-slides">
+      <!-- Rendered by diagnostico.js -->
+    </div>
+
+    <div class="diag-navigation">
+      <button id="btn-prev" class="diag-btn-prev hidden">← Anterior</button>
+      <button id="btn-next" class="diag-btn-next" disabled>Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- ═══ CHATBOT ═══ -->
+  <div id="chatbot-wrapper">
+    <div id="chatbot-panel" class="chatbot-closed">
+      <div class="chatbot-header">
+        <div class="chatbot-avatar"></div>
+        <div class="chatbot-info">
+          <strong>Markelite IA</strong>
+          <span class="online-dot">● En línea</span>
+        </div>
+        <button id="chatbot-close">×</button>
+      </div>
+      <div id="chatbot-messages">
+        <div class="chat-msg bot">¿Tienes dudas antes de continuar? Estoy aquí para ayudarte.</div>
+      </div>
+      <div class="chatbot-input-area">
+        <input type="text" id="chatbot-input" placeholder="Escribe tu mensaje..." autocomplete="off" />
+        <button id="chatbot-send" aria-label="Enviar">→</button>
+      </div>
+    </div>
+    <button id="chatbot-toggle" aria-label="Abrir chat">
+      <svg class="chatbot-toggle-icon" width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="#05080c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <svg class="chatbot-close-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path d="M18 6L6 18M6 6l12 12" stroke="#05080c" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script>
+  (async function () {
+    try {
+      if (!window.MklWeb || !window.mklDB) return;
+      if (sessionStorage.getItem('mkl_utm_sid')) return;
+      const localId = 'web_' + Math.random().toString(36).slice(2, 10) + '_' + Date.now();
+      const dbId = await window.MklWeb.trackUTMSession(localId);
+      if (dbId) sessionStorage.setItem('mkl_utm_sid', dbId);
+    } catch (e) {}
+  })();
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="js/diagnostico.js"></script>
+  <script src="js/chatbot.js"></script>
+
+  <script src="js/analytics.js"></script>
+</body>
+</html>

@@ -1,0 +1,423 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' cdn.jsdelivr.net cdnjs.cloudflare.com www.googletagmanager.com www.google-analytics.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' *.supabase.co wss://*.supabase.co www.google-analytics.com analytics.google.com; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self';">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Propuesta Comercial — Markelite</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rem:ital,wght@0,400;0,500;0,600;0,700&family=Syne:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #f1f5f9;
+      --surface:   #ffffff;
+      --border:    #e2e8f0;
+      --text:      #0f172a;
+      --soft:      #64748b;
+      --accent:    #ebeb81;
+      --accent2:   #facc7b;
+      --green:     #16a34a;
+      --blue:      #1e40af;
+      --radius:    14px;
+    }
+
+    body {
+      font-family: 'Rem', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 24px 16px 60px;
+    }
+
+    /* ── Loading ── */
+    #vp-loading {
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; min-height: 60vh; gap: 16px;
+    }
+    .vp-spinner {
+      width: 40px; height: 40px;
+      border: 3px solid var(--border);
+      border-top-color: var(--text);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Error ── */
+    #vp-error {
+      display: none; flex-direction: column; align-items: center;
+      justify-content: center; min-height: 60vh; gap: 12px; text-align: center;
+    }
+    .vp-error-icon { font-size: 3rem; }
+    .vp-error-title { font-size: 1.5rem; font-weight: 700; }
+    .vp-error-msg { color: var(--soft); max-width: 360px; line-height: 1.6; }
+
+    /* ── Proposal doc ── */
+    #vp-doc { display: none; max-width: 680px; margin: 0 auto; }
+
+    /* Header */
+    .vp-header {
+      background: #05080c;
+      border-radius: var(--radius) var(--radius) 0 0;
+      padding: 24px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .vp-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.375rem; font-weight: 700;
+      color: #fff; letter-spacing: -0.02em;
+    }
+    .vp-logo span { color: var(--accent); }
+    .vp-header-badge {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em;
+      padding: 4px 12px; border-radius: 100px;
+      text-transform: uppercase;
+    }
+    .vp-badge-borrador  { background: #475569; color: #fff; }
+    .vp-badge-enviada   { background: #1e40af; color: #fff; }
+    .vp-badge-vista     { background: #7c3aed; color: #fff; }
+    .vp-badge-aceptada  { background: #16a34a; color: #fff; }
+    .vp-badge-rechazada { background: #dc2626; color: #fff; }
+
+    /* Body */
+    .vp-body {
+      background: var(--surface);
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      padding: 32px;
+    }
+
+    .vp-meta {
+      display: flex; gap: 8px; align-items: center; margin-bottom: 20px;
+      font-size: 0.8125rem; color: var(--soft);
+    }
+    .vp-meta-sep { color: var(--border); }
+
+    .vp-title { font-size: 1.75rem; font-weight: 700; margin-bottom: 4px; }
+    .vp-subtitle { font-size: 1rem; color: var(--soft); margin-bottom: 28px; }
+
+    /* Stats row */
+    .vp-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 12px; margin-bottom: 28px;
+    }
+    .vp-stat {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .vp-stat-val { font-size: 1.2rem; font-weight: 700; }
+    .vp-stat-lbl { font-size: 0.6875rem; color: var(--soft); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+    /* Items */
+    .vp-section-title {
+      font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--soft);
+      margin-bottom: 12px; margin-top: 24px;
+    }
+    .vp-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 0; border-bottom: 1px solid var(--border);
+      gap: 12px;
+    }
+    .vp-item:last-child { border-bottom: none; }
+    .vp-item-desc { font-size: 0.9375rem; }
+    .vp-item-price {
+      font-size: 0.9375rem; font-weight: 600;
+      white-space: nowrap; color: var(--text);
+    }
+
+    /* Total */
+    .vp-total-row {
+      display: flex; align-items: center; justify-content: space-between;
+      background: #f8fafc; border: 1px solid var(--border);
+      border-radius: 10px; padding: 16px 20px;
+      margin-top: 8px;
+    }
+    .vp-total-label { font-size: 0.875rem; font-weight: 600; color: var(--soft); }
+    .vp-total-val { font-size: 1.375rem; font-weight: 700; }
+
+    /* Notes */
+    .vp-notes {
+      background: #fefce8; border: 1px solid #fde047;
+      border-radius: 10px; padding: 16px 18px;
+      font-size: 0.875rem; color: #713f12; line-height: 1.6;
+    }
+
+    /* Validity */
+    .vp-validity {
+      font-size: 0.8125rem; color: var(--soft); text-align: center;
+      margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border);
+    }
+
+    /* CTA */
+    .vp-cta-wrap {
+      background: #f0fdf4; border: 1px solid #bbf7d0;
+      border-radius: 10px; padding: 20px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap; margin-top: 24px;
+    }
+    .vp-cta-text { font-size: 0.9375rem; font-weight: 600; color: #166534; }
+    .vp-cta-sub  { font-size: 0.8125rem; color: #15803d; margin-top: 2px; }
+    .vp-cta-btn {
+      background: #16a34a; color: #fff;
+      border: none; cursor: pointer;
+      font-family: inherit; font-size: 0.9375rem; font-weight: 600;
+      padding: 12px 24px; border-radius: 100px;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .vp-cta-btn:hover { background: #15803d; }
+
+    /* Footer bar */
+    .vp-footer {
+      background: #f8fafc;
+      border: 1px solid var(--border); border-top: none;
+      border-radius: 0 0 var(--radius) var(--radius);
+      padding: 14px 32px;
+      font-size: 0.75rem; color: var(--soft);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 8px;
+    }
+    .vp-footer a { color: var(--soft); text-decoration: none; }
+    .vp-footer a:hover { color: var(--text); }
+
+    /* Accepted overlay */
+    .vp-accepted-banner {
+      background: #16a34a; color: #fff;
+      padding: 14px 20px; border-radius: 10px;
+      font-size: 0.9375rem; font-weight: 600;
+      display: flex; align-items: center; gap: 10px;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 520px) {
+      .vp-body { padding: 20px 16px; }
+      .vp-header { padding: 18px 20px; }
+      .vp-stats { grid-template-columns: 1fr 1fr; }
+      .vp-footer { padding: 12px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loading -->
+  <div id="vp-loading">
+    <div class="vp-spinner"></div>
+    <p style="color:#64748b;font-size:0.9rem">Cargando propuesta…</p>
+  </div>
+
+  <!-- Error -->
+  <div id="vp-error">
+    <div class="vp-error-icon">🔒</div>
+    <div class="vp-error-title">Propuesta no encontrada</div>
+    <div class="vp-error-msg" id="vp-error-msg">
+      Este link no es válido o ha expirado. Si crees que es un error, contacta a Markelite.
+    </div>
+    <a href="index.html" style="margin-top:8px;color:#0f172a;font-weight:600;text-decoration:none">← Ir al inicio</a>
+  </div>
+
+  <!-- Proposal document -->
+  <div id="vp-doc">
+
+    <div class="vp-header">
+      <div class="vp-logo">Markelite<span>.</span></div>
+      <span class="vp-header-badge" id="vp-status-badge"></span>
+    </div>
+
+    <div class="vp-body">
+
+      <div class="vp-meta">
+        <span id="vp-date"></span>
+        <span class="vp-meta-sep">·</span>
+        <span>Markelite.cl</span>
+        <span class="vp-meta-sep">·</span>
+        <span id="vp-currency-label"></span>
+      </div>
+
+      <div class="vp-title" id="vp-title"></div>
+      <div class="vp-subtitle" id="vp-client-line"></div>
+
+      <div class="vp-stats" id="vp-stats"></div>
+
+      <div class="vp-section-title">Detalle de servicios</div>
+      <div id="vp-items"></div>
+
+      <div class="vp-total-row">
+        <span class="vp-total-label">Total</span>
+        <span class="vp-total-val" id="vp-total"></span>
+      </div>
+
+      <div id="vp-notes-wrap" style="display:none;margin-top:20px">
+        <div class="vp-section-title">Notas</div>
+        <div class="vp-notes" id="vp-notes"></div>
+      </div>
+
+      <div class="vp-validity" id="vp-validity"></div>
+
+      <div id="vp-accepted-banner" style="display:none" class="vp-accepted-banner">
+        ✓ Propuesta aceptada — ¡Gracias por confiar en Markelite!
+      </div>
+
+      <div class="vp-cta-wrap" id="vp-cta-wrap">
+        <div>
+          <div class="vp-cta-text">¿Listo para empezar?</div>
+          <div class="vp-cta-sub">Escríbenos y agendamos en menos de 24h</div>
+        </div>
+        <button class="vp-cta-btn" id="vp-cta-btn">Aceptar propuesta →</button>
+      </div>
+
+    </div>
+
+    <div class="vp-footer">
+      <span>© Markelite · <a href="index.html">markelite.cl</a></span>
+      <span id="vp-footer-validity"></span>
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script>
+  (async function () {
+    const token = window.location.hash.slice(1) || new URLSearchParams(window.location.search).get('token');
+
+    function showError(msg) {
+      document.getElementById('vp-loading').style.display = 'none';
+      const err = document.getElementById('vp-error');
+      err.style.display = 'flex';
+      if (msg) document.getElementById('vp-error-msg').textContent = msg;
+    }
+
+    if (!token) { showError('No se proporcionó un token de acceso.'); return; }
+
+    /* ── Fetch token + proposal ── */
+    let tokenRow = null;
+    if (window.MklDB) {
+      tokenRow = await window.MklDB.getProposalByToken(token);
+    }
+
+    if (!tokenRow || !tokenRow.proposals) {
+      showError('Este link no es válido o ha expirado. Si crees que es un error, contacta a Markelite.');
+      return;
+    }
+
+    /* ── Mark as viewed ── */
+    if (window.MklDB) window.MklDB.markProposalTokenViewed(token);
+
+    const p = tokenRow.proposals;
+
+    /* ── Helpers ── */
+    function formatCLP(val, currency) {
+      const v = parseInt(val) || 0;
+      if (currency === 'CLP') {
+        if (v >= 1e6) return `$${(v/1e6).toFixed(1)}M CLP`;
+        if (v >= 1e3) return `$${Math.round(v/1e3)}K CLP`;
+        return `$${v.toLocaleString('es-CL')} CLP`;
+      }
+      return `${currency} ${v.toLocaleString()}`;
+    }
+
+    function esc(s) {
+      return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    }
+
+    /* ── Render ── */
+    document.title = `${p.title} — Markelite`;
+
+    // Status badge
+    const badge = document.getElementById('vp-status-badge');
+    const STATUS_LABEL = { borrador:'Borrador', enviada:'Enviada', vista:'Vista', aceptada:'Aceptada ✓', rechazada:'Rechazada' };
+    badge.textContent = STATUS_LABEL[p.status] || p.status;
+    badge.className   = `vp-header-badge vp-badge-${p.status}`;
+
+    // Meta
+    document.getElementById('vp-date').textContent = new Date(p.created_at).toLocaleDateString('es-CL', { day:'numeric', month:'long', year:'numeric' });
+    document.getElementById('vp-currency-label').textContent = p.currency || 'CLP';
+
+    // Title + client
+    document.getElementById('vp-title').textContent = p.title;
+    const clientLine = [p.client_name, p.client_email].filter(Boolean).join(' · ');
+    document.getElementById('vp-client-line').textContent = clientLine || 'Para: cliente';
+
+    // Stats
+    const statsEl = document.getElementById('vp-stats');
+    const items = Array.isArray(p.items) ? p.items : (typeof p.items === 'string' ? JSON.parse(p.items || '[]') : []);
+    statsEl.innerHTML = `
+      <div class="vp-stat">
+        <div class="vp-stat-val">${items.length || 1}</div>
+        <div class="vp-stat-lbl">Servicio${items.length !== 1 ? 's' : ''}</div>
+      </div>
+      <div class="vp-stat">
+        <div class="vp-stat-val">${formatCLP(p.total, p.currency)}</div>
+        <div class="vp-stat-lbl">Total / mes</div>
+      </div>
+      <div class="vp-stat">
+        <div class="vp-stat-val">${parseInt(p.validity_days) || 30} días</div>
+        <div class="vp-stat-lbl">Validez</div>
+      </div>`;
+
+    // Items
+    const itemsEl = document.getElementById('vp-items');
+    if (items.length > 0) {
+      itemsEl.innerHTML = items.map(i => `
+        <div class="vp-item">
+          <span class="vp-item-desc">${esc(i.desc || i.description || i.name || 'Servicio')}</span>
+          <span class="vp-item-price">${formatCLP(i.price || i.amount || 0, p.currency)}</span>
+        </div>`).join('');
+    } else {
+      itemsEl.innerHTML = `
+        <div class="vp-item">
+          <span class="vp-item-desc">${esc(p.title)}</span>
+          <span class="vp-item-price">${formatCLP(p.total, p.currency)}</span>
+        </div>`;
+    }
+
+    // Total
+    document.getElementById('vp-total').textContent = formatCLP(p.total, p.currency);
+
+    // Notes
+    if (p.notes?.trim()) {
+      document.getElementById('vp-notes-wrap').style.display = 'block';
+      document.getElementById('vp-notes').textContent = p.notes;
+    }
+
+    // Validity text
+    const expiry = tokenRow.expires_at
+      ? `Válida hasta ${new Date(tokenRow.expires_at).toLocaleDateString('es-CL')}`
+      : `Esta propuesta es válida por ${p.validity_days || 30} días desde su emisión`;
+    document.getElementById('vp-validity').textContent = expiry;
+    document.getElementById('vp-footer-validity').textContent = expiry;
+
+    // Accepted / rejected state
+    if (p.status === 'aceptada') {
+      document.getElementById('vp-accepted-banner').style.display = 'flex';
+      document.getElementById('vp-cta-wrap').style.display = 'none';
+    } else if (p.status === 'rechazada') {
+      document.getElementById('vp-cta-wrap').style.display = 'none';
+    }
+
+    // CTA button
+    document.getElementById('vp-cta-btn').addEventListener('click', () => {
+      const wa = `https://wa.me/56948667203?text=${encodeURIComponent(`Hola Markelite, quiero aceptar la propuesta "${p.title}"`)}`;
+      window.open(wa, '_blank');
+    });
+
+    // Show document
+    document.getElementById('vp-loading').style.display = 'none';
+    document.getElementById('vp-doc').style.display = 'block';
+
+  })();
+  </script>
+
+</body>
+</html>

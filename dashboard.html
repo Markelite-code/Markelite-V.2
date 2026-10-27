@@ -1,0 +1,1136 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <script src="js/theme-init.js"></script>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' cdn.jsdelivr.net cdnjs.cloudflare.com www.googletagmanager.com www.google-analytics.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' *.supabase.co wss://*.supabase.co www.google-analytics.com analytics.google.com; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self';">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — Markelite</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="description" content="Panel de control Markelite — gestiona tus servicios de automatización e IA" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rem:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Syne:wght@400;700&display=swap" rel="stylesheet" />
+
+  <!-- Supabase JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9XCY1FMESR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9XCY1FMESR');
+  </script>
+</head>
+<body class="dashboard-body">
+
+<div class="dash-overlay" id="dash-overlay"></div>
+
+<!-- ═══ SIDEBAR ═══ -->
+<aside class="dash-sidebar" id="dash-sidebar">
+  <div class="dash-sidebar-logo">
+    <a href="index.html" class="sidebar-mkl-link" title="Volver a Markelite">
+      <img src="images/isotipo-blanco.png" class="sidebar-mkl-icon" alt="" aria-hidden="true" />
+      <span class="sidebar-mkl-word"><span style="color:#EEEFEE">MARK</span><span style="color:#EBEB81">ELITE</span></span>
+    </a>
+    <span class="sidebar-divider">|</span>
+    <div id="sidebar-brand" class="sidebar-brand-slot"></div>
+  </div>
+
+  <nav class="dash-nav" aria-label="Navegación del panel">
+
+    <div class="dash-nav-section">Panel</div>
+    <a class="dash-nav-item active" data-section="resumen" aria-label="Ir a Resumen">
+      <span class="nav-icon">📊</span> Resumen
+    </a>
+
+    <div class="dash-nav-section">Desarrollo</div>
+    <a class="dash-nav-item" data-section="saas" data-service="saas" aria-label="SaaS y App a medida">
+      <span class="nav-icon">💻</span> SaaS / App
+      <span class="nav-lock-icon" id="navlock-saas">🔒</span>
+    </a>
+    <a class="dash-nav-item" data-section="sistema-ia" data-service="sistema-ia" aria-label="Sistema de automatización IA">
+      <span class="nav-icon">🤖</span> Sistema IA
+      <span class="nav-lock-icon" id="navlock-sistema-ia">🔒</span>
+    </a>
+
+    <div class="dash-nav-section">Automatización</div>
+    <a class="dash-nav-item" data-section="agente-ia" data-service="agente-ia" aria-label="Agente IA conversacional 24/7">
+      <span class="nav-icon">💬</span> Agente IA 24/7
+      <span class="dash-nav-badge" id="badge-agente">5</span>
+      <span class="nav-lock-icon" id="navlock-agente-ia">🔒</span>
+    </a>
+    <a class="dash-nav-item" data-section="crm" aria-label="CRM e inteligencia de leads">
+      <span class="nav-icon">🗂️</span> CRM + Leads
+      <span class="dash-nav-badge" id="badge-crm">8</span>
+    </a>
+    <a class="dash-nav-item" data-section="automatizaciones" data-service="automatizaciones" aria-label="Automatización de procesos">
+      <span class="nav-icon">⚙️</span> Automatizaciones
+      <span class="nav-lock-icon" id="navlock-automatizaciones">🔒</span>
+    </a>
+
+    <div class="dash-nav-section">Gestión</div>
+    <a class="dash-nav-item" data-section="propuestas" data-service="propuestas" aria-label="Propuestas y presupuestos">
+      <span class="nav-icon">📄</span> Propuestas
+      <span class="nav-lock-icon" id="navlock-propuestas">🔒</span>
+    </a>
+    <a class="dash-nav-item" data-section="onboarding" data-service="onboarding" aria-label="Onboarding de clientes">
+      <span class="nav-icon">🚀</span> Onboarding
+      <span class="nav-lock-icon" id="navlock-onboarding">🔒</span>
+    </a>
+    <a class="dash-nav-item" data-section="cobros" data-service="cobros" aria-label="Facturación y cobros">
+      <span class="nav-icon">💳</span> Cobros & Facturas
+      <span class="nav-lock-icon" id="navlock-cobros">🔒</span>
+    </a>
+    <a class="dash-nav-item" data-section="reportes" aria-label="Reportes automáticos">
+      <span class="nav-icon">📈</span> Reportes
+    </a>
+    <a class="dash-nav-item" data-section="reputacion" data-service="reputacion" aria-label="Gestión de reputación online">
+      <span class="nav-icon">⭐</span> Reputación
+      <span class="nav-lock-icon" id="navlock-reputacion">🔒</span>
+    </a>
+
+    <div class="dash-nav-section">Mi Cuenta</div>
+    <a class="dash-nav-item" data-section="cuenta" aria-label="Configuración de cuenta">
+      <span class="nav-icon">👤</span> Perfil
+    </a>
+    <a class="dash-nav-item" data-section="equipo" aria-label="Equipo de trabajo">
+      <span class="nav-icon">🤝</span> Equipo
+    </a>
+    <a class="dash-nav-item" data-section="integraciones" aria-label="Integraciones externas">
+      <span class="nav-icon">🔌</span> Integraciones
+    </a>
+    <a class="dash-nav-item" data-section="marca" aria-label="Personalización de marca">
+      <span class="nav-icon">🎨</span> Marca
+    </a>
+    <a class="dash-nav-item" data-section="suscripcion" aria-label="Mi suscripción con Markelite">
+      <span class="nav-icon">📋</span> Suscripción
+    </a>
+
+  </nav>
+
+  <div class="dash-sidebar-footer">
+    <button class="dash-logout dash-logout-btn" aria-label="Cerrar sesión">
+      <span class="nav-icon">🚪</span> Cerrar sesión
+    </button>
+  </div>
+</aside>
+
+<!-- ═══ MAIN ═══ -->
+<div class="dash-main">
+
+  <!-- Topbar -->
+  <header class="dash-topbar">
+    <div class="dash-topbar-left">
+      <button class="dash-menu-toggle" id="dash-menu-toggle" aria-label="Abrir menú">☰</button>
+      <div class="dash-page-title" id="page-title">Resumen</div>
+    </div>
+    <div class="dash-topbar-right">
+      <span id="data-status-badge" class="data-status-badge demo">● Demo</span>
+      <div class="dash-date-badge" id="topbar-date"></div>
+      <button class="dash-notif-btn" title="Notificaciones" aria-label="Notificaciones">
+        🔔<span class="dash-notif-dot"></span>
+      </button>
+      <div class="topbar-user-wrap" id="topbar-user-dropdown">
+        <button class="topbar-user-btn" id="topbar-user-btn" aria-label="Menú de usuario">
+          <div class="topbar-avatar" id="topbar-avatar">MK</div>
+          <span class="topbar-user-name" id="topbar-user-name"></span>
+          <span class="topbar-chevron">▾</span>
+        </button>
+        <div class="topbar-user-menu" role="menu">
+          <a class="topbar-menu-item" onclick="switchSection('cuenta')" role="menuitem">👤 Mi Perfil</a>
+          <a class="topbar-menu-item" onclick="switchSection('marca')" role="menuitem">🎨 Marca</a>
+          <a class="topbar-menu-item" onclick="switchSection('suscripcion')" role="menuitem">📋 Suscripción</a>
+          <div class="topbar-menu-sep"></div>
+          <a class="topbar-menu-item logout dash-logout-btn" role="menuitem">🚪 Cerrar sesión</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <div class="dash-content">
+
+    <!-- ══════════════════════════════════════════
+         RESUMEN
+    ══════════════════════════════════════════ -->
+    <div class="dash-section active" id="section-resumen">
+      <div class="dash-greeting">
+        <h1 id="greeting-text">Buenos días 👋</h1>
+        <p>Aquí tienes el resumen de rendimiento de tu negocio.</p>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <span class="kpi-icon">👥</span>
+          <div class="kpi-label">Contactos nuevos</div>
+          <div class="kpi-value" data-kpi="47">0</div>
+          <span class="kpi-delta up">▲ 18% vs mes anterior</span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-icon">💰</span>
+          <div class="kpi-label">Pipeline activo</div>
+          <div class="kpi-value" data-kpi-prefix="$" data-kpi="4.2" data-kpi-suffix="M">$0</div>
+          <span class="kpi-delta up">▲ 31% vs mes anterior</span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-icon">⚡</span>
+          <div class="kpi-label">Automatizaciones ejecutadas</div>
+          <div class="kpi-value" data-kpi="89">0</div>
+          <span class="kpi-delta up">▲ 24% vs mes anterior</span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-icon">🎯</span>
+          <div class="kpi-label">Tasa de conversión</div>
+          <div class="kpi-value" data-kpi="34" data-kpi-suffix="%">0</div>
+          <span class="kpi-delta down">▼ 2% vs mes anterior</span>
+        </div>
+      </div>
+
+      <div class="dash-charts-row">
+        <div class="dash-card">
+          <div class="dash-card-header">
+            <div>
+              <div class="dash-card-title">Leads por semana</div>
+              <div class="dash-card-subtitle">Últimas 8 semanas</div>
+            </div>
+            <button class="dash-card-action" onclick="switchSection('crm')">Ver CRM</button>
+          </div>
+          <div class="bar-chart-wrap" id="bar-chart"></div>
+        </div>
+        <div class="dash-card">
+          <div class="dash-card-header">
+            <div>
+              <div class="dash-card-title">Fuentes de leads</div>
+              <div class="dash-card-subtitle">Este mes</div>
+            </div>
+          </div>
+          <div class="donut-wrap">
+            <div class="donut-chart">
+              <svg width="140" height="140" viewBox="0 0 140 140">
+                <circle cx="70" cy="70" r="54" fill="none" stroke="rgba(0,0,0,0.06)" stroke-width="16"/>
+                <circle id="donut-seg-1" cx="70" cy="70" r="54" fill="none" stroke="#EBEB81" stroke-width="16" stroke-dasharray="0 339.3" stroke-linecap="round" style="transition:stroke-dasharray 1.2s ease"/>
+                <circle id="donut-seg-2" cx="70" cy="70" r="54" fill="none" stroke="#FACC7B" stroke-width="16" stroke-dasharray="0 339.3" stroke-linecap="round" style="transition:stroke-dasharray 1.2s ease 0.1s"/>
+                <circle id="donut-seg-3" cx="70" cy="70" r="54" fill="none" stroke="rgba(100,149,237,0.7)" stroke-width="16" stroke-dasharray="0 339.3" stroke-linecap="round" style="transition:stroke-dasharray 1.2s ease 0.2s"/>
+                <circle id="donut-seg-4" cx="70" cy="70" r="54" fill="none" stroke="rgba(40,200,64,0.6)" stroke-width="16" stroke-dasharray="0 339.3" stroke-linecap="round" style="transition:stroke-dasharray 1.2s ease 0.3s"/>
+              </svg>
+              <div class="donut-center">
+                <div class="donut-center-value">47</div>
+                <div class="donut-center-label">leads</div>
+              </div>
+            </div>
+            <div class="donut-legend">
+              <div class="legend-item"><span class="legend-dot" style="background:#EBEB81"></span> Instagram Ads <span class="legend-pct">42%</span></div>
+              <div class="legend-item"><span class="legend-dot" style="background:#FACC7B"></span> WhatsApp <span class="legend-pct">28%</span></div>
+              <div class="legend-item"><span class="legend-dot" style="background:rgba(100,149,237,0.7)"></span> Web orgánica <span class="legend-pct">19%</span></div>
+              <div class="legend-item"><span class="legend-dot" style="background:rgba(40,200,64,0.6)"></span> Referidos <span class="legend-pct">11%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-lower-row">
+        <div class="dash-card">
+          <div class="dash-card-header">
+            <div>
+              <div class="dash-card-title">Pipeline de ventas</div>
+              <div class="dash-card-subtitle">Estado actual</div>
+            </div>
+            <button class="dash-card-action" onclick="switchSection('crm')">Ver kanban</button>
+          </div>
+          <div class="pipeline-stages" id="pipeline-stages">
+            <div class="pipeline-stage"><div class="stage-name">Nuevo lead</div><div class="stage-bar-wrap"><div class="stage-bar" data-pct="100"></div></div><div class="stage-count">18</div><div class="stage-value">$2.1M</div></div>
+            <div class="pipeline-stage"><div class="stage-name">Contactado</div><div class="stage-bar-wrap"><div class="stage-bar" data-pct="78"></div></div><div class="stage-count">14</div><div class="stage-value">$1.6M</div></div>
+            <div class="pipeline-stage"><div class="stage-name">Propuesta</div><div class="stage-bar-wrap"><div class="stage-bar" data-pct="50"></div></div><div class="stage-count">9</div><div class="stage-value">$920K</div></div>
+            <div class="pipeline-stage"><div class="stage-name">Negociación</div><div class="stage-bar-wrap"><div class="stage-bar" data-pct="28"></div></div><div class="stage-count">5</div><div class="stage-value">$540K</div></div>
+            <div class="pipeline-stage"><div class="stage-name">Cerrado ✓</div><div class="stage-bar-wrap"><div class="stage-bar" data-pct="17"></div></div><div class="stage-count">3</div><div class="stage-value">$310K</div></div>
+          </div>
+        </div>
+        <div class="dash-card">
+          <div class="dash-card-header">
+            <div>
+              <div class="dash-card-title">Leads recientes</div>
+              <div class="dash-card-subtitle">Últimas 24 horas</div>
+            </div>
+            <button class="dash-card-action" onclick="switchSection('crm')">Ver todos</button>
+          </div>
+          <div class="contacts-list" id="resumen-leads-list">
+            <div class="contact-row"><div class="contact-avatar-sm">PM</div><div class="contact-info"><div class="contact-name">Pedro Morales</div><div class="contact-meta">Clínica Dental · hace 20 min</div></div><span class="contact-tag nuevo">Nuevo</span></div>
+            <div class="contact-row"><div class="contact-avatar-sm">LR</div><div class="contact-info"><div class="contact-name">Laura Rodríguez</div><div class="contact-meta">Centro Estético · hace 1h</div></div><span class="contact-tag activo">Activo</span></div>
+            <div class="contact-row"><div class="contact-avatar-sm">JC</div><div class="contact-info"><div class="contact-name">Javier Castro</div><div class="contact-meta">Consultora · hace 3h</div></div><span class="contact-tag seguimiento">Seguimiento</span></div>
+            <div class="contact-row"><div class="contact-avatar-sm">AS</div><div class="contact-info"><div class="contact-name">Ana Sepúlveda</div><div class="contact-meta">E-commerce · ayer</div></div><span class="contact-tag cerrado">Cerrado</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-lower-row">
+        <div class="dash-card">
+          <div class="dash-card-header">
+            <div>
+              <div class="dash-card-title">Automatizaciones activas</div>
+              <div class="dash-card-subtitle">Ejecutadas por Markelite</div>
+            </div>
+            <button class="dash-card-action" onclick="switchSection('automatizaciones')">Ver todas</button>
+          </div>
+          <div class="automations-list" id="resumen-auto-list">
+            <div class="automation-item"><div class="automation-icon">💬</div><div class="automation-info"><div class="automation-name">Bienvenida automática WhatsApp</div><div class="automation-stat">23 ejecuciones este mes</div></div><button class="automation-toggle" title="Activo"></button></div>
+            <div class="automation-item"><div class="automation-icon">📧</div><div class="automation-info"><div class="automation-name">Seguimiento de cotizaciones</div><div class="automation-stat">11 ejecuciones este mes</div></div><button class="automation-toggle" title="Activo"></button></div>
+            <div class="automation-item"><div class="automation-icon">📅</div><div class="automation-info"><div class="automation-name">Recordatorio de citas</div><div class="automation-stat">18 ejecuciones este mes</div></div><button class="automation-toggle" title="Activo"></button></div>
+            <div class="automation-item"><div class="automation-icon">⭐</div><div class="automation-info"><div class="automation-name">Solicitud de reseña Google</div><div class="automation-stat">7 ejecuciones este mes</div></div><button class="automation-toggle off" title="Pausado"></button></div>
+          </div>
+        </div>
+        <div class="dash-card">
+          <div class="dash-card-header">
+            <div>
+              <div class="dash-card-title">Conversaciones recientes</div>
+              <div class="dash-card-subtitle" id="resumen-conv-sub">3 sin leer</div>
+            </div>
+            <button class="dash-card-action" onclick="switchSection('agente-ia')">Ver todas</button>
+          </div>
+          <div class="conv-list" id="resumen-conv-list">
+            <div class="conv-item"><div class="conv-avatar">PM</div><div class="conv-body"><div class="conv-name">Pedro Morales</div><div class="conv-preview">¿Cuánto cuesta el plan básico?</div></div><div class="conv-meta"><span class="conv-time">hace 2m</span><span class="conv-unread">2</span></div></div>
+            <div class="conv-item"><div class="conv-avatar">LR</div><div class="conv-body"><div class="conv-name">Laura Rodríguez</div><div class="conv-preview">Perfecto, confirmo la cita para el lunes</div></div><div class="conv-meta"><span class="conv-time">hace 1h</span><span class="conv-unread">1</span></div></div>
+            <div class="conv-item"><div class="conv-avatar">JC</div><div class="conv-body"><div class="conv-name">Javier Castro</div><div class="conv-preview">Ok, revisaré la propuesta y te aviso</div></div><div class="conv-meta"><span class="conv-time">hace 3h</span></div></div>
+            <div class="conv-item"><div class="conv-avatar">CM</div><div class="conv-body"><div class="conv-name">Carlos Muñoz</div><div class="conv-preview">Quiero saber más sobre sus servicios</div></div><div class="conv-meta"><span class="conv-time">hace 4h</span><span class="conv-unread">3</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         SAAS / APP A MEDIDA
+    ══════════════════════════════════════════ -->
+    <div class="dash-section" id="section-saas">
+      <div class="service-lock-overlay" id="lock-saas">
+        <div class="lock-card">
+          <span class="lock-emoji">💻</span>
+          <h3>Plan Completo requerido</h3>
+          <p>El servicio SaaS / App a medida está incluido en el Plan Completo.<br>Contacta a Markelite para activarlo.</p>
+          <a href="mailto:soporte@markelite.cl?subject=Quiero activar SaaS en mi plan" class="btn-unlock">Mejorar plan →</a>
+        </div>
+      </div>
+      <div class="dash-greeting">
+        <h1>SaaS / App a Medida 💻</h1>
+        <p>Tu plataforma personalizada desarrollada por el equipo de Markelite</p>
+      </div>
+      <div class="dash-lower-row">
+        <div class="dash-card">
+          <div class="dash-card-header">
+            <div>
+              <div class="dash-card-title">Estado de tu aplicación</div>
+              <div class="dash-card-subtitle">Desarrollada y mantenida por Markelite</div>
+            </div>
+            <span class="status-badge in-dev" id="saas-status-badge">● En desarrollo</span>
+          </div>
+          <div class="saas-steps" id="saas-steps">
+            <div class="saas-step done"><span class="step-dot">✓</span><span class="step-label">Diseño y wireframes aprobados</span></div>
+            <div class="saas-step done"><span class="step-dot">✓</span><span class="step-label">Backend desarrollado</span></div>
+            <div class="saas-step active"><span class="step-dot">⋯</span><span class="step-label">Integraciones en curso</span></div>
+            <div class="saas-step pending"><span class="step-dot">○</span><span class="step-label">Testing QA</span></div>
+            <div class="saas-step pending"><span class="step-dot">○</span><span class="step-label">Entrega y deploy en producción</span></div>
+          </div>
+          <div style="margin-top:20px">
+            <a id="saas-tustack-btn" href="https://tustack.app" target="_blank" rel="noopener noreferrer" class="btn-settings-save" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none">
+              Ir a TuStack ↗
+            </a>
+          </div>
+        </div>
+        <div class="dash-card">
+          <div class="dash-card-header">
+            <div>
+              <div class="dash-card-title">¿Consultas sobre tu app?</div>
+            </div>
+          </div>
+          <p style="font-size:0.875rem;color:var(--dash-text-soft);line-height:1.6;margin-bottom:20px">¿Tienes dudas sobre el desarrollo, necesitas un cambio o quieres solicitar nuevas funciones? Contacta directo al equipo técnico de Markelite.</p>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <a href="mailto:dev@markelite.cl?subject=Consulta SaaS - Mi App" class="btn-settings-outline" style="text-align:center;text-decoration:none">📧 Escribir al equipo dev</a>
+            <a href="https://wa.me/56948667203?text=Hola, tengo una consulta sobre mi app" target="_blank" rel="noopener" class="btn-settings-outline" style="text-align:center;text-decoration:none">💬 WhatsApp Markelite</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         SISTEMA DE AUTOMATIZACIÓN IA
+    ══════════════════════════════════════════ -->
+    <div class="dash-section" id="section-sistema-ia">
+      <div class="service-lock-overlay" id="lock-sistema-ia">
+        <div class="lock-card">
+          <span class="lock-emoji">🤖</span>
+          <h3>Plan Completo requerido</h3>
+          <p>El sistema de automatización IA está disponible en el Plan Completo.</p>
+          <a href="mailto:soporte@markelite.cl?subject=Quiero activar Sistema IA" class="btn-unlock">Mejorar plan →</a>
+        </div>
+      </div>
+      <div class="dash-greeting">
+        <h1>Sistema de Automatización IA 🤖</h1>
+        <p>Workflows activos en tu negocio, configurados y mantenidos por Markelite</p>
+      </div>
+      <div class="kpi-grid">
+        <div class="kpi-card"><span class="kpi-icon">⚡</span><div class="kpi-label">Ejecuciones este mes</div><div class="kpi-value" data-kpi="89">0</div><span class="kpi-delta up">▲ 24% vs mes ant.</span></div>
+        <div class="kpi-card"><span class="kpi-icon">⏱️</span><div class="kpi-label">Horas ahorradas</div><div class="kpi-value" data-kpi="47" data-kpi-suffix="h">0</div><span class="kpi-delta up">▲ Este mes</span></div>
+        <div class="kpi-card"><span class="kpi-icon">✅</span><div class="kpi-label">Tasa de éxito</div><div class="kpi-value" data-kpi="98" data-kpi-suffix="%">0</div><span class="kpi-delta up">▲ Promedio</span></div>
+        <div class="kpi-card"><span class="kpi-icon">⚠️</span><div class="kpi-label">Errores este mes</div><div class="kpi-value" data-kpi="2">0</div><span class="kpi-delta down">▼ vs 8 mes ant.</span></div>
+      </div>
+      <div class="dash-card" style="margin-bottom:20px">
+        <div class="dash-card-header">
+          <div>
+            <div class="dash-card-title">Automatizaciones instaladas</div>
+            <div class="dash-card-subtitle">Cada toggle pausa/reanuda esa automatización — los cambios de configuración requieren contactar a Markelite</div>
+          </div>
+          <a href="mailto:soporte@markelite.cl?subject=Solicitar nueva automatización" class="dash-card-action">+ Solicitar nueva</a>
+        </div>
+        <div id="sistema-ia-list" class="automations-full-list"></div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-card-header">
+          <div>
+            <div class="dash-card-title">Zona de despliegue</div>
+            <div class="dash-card-subtitle">Markelite puede instalar nuevas automatizaciones arrastrando aquí el archivo de configuración</div>
+          </div>
+        </div>
+        <div class="drop-zone" id="automation-drop-zone" ondragover="event.preventDefault()" ondrop="handleAutomationDrop(event)">
+          <span class="drop-icon">📦</span>
+          <p>Arrastra el archivo <code>.mkl</code> de configuración aquí</p>
+          <span class="drop-hint">Solo accesible por el equipo técnico de Markelite</span>
+          <a href="mailto:soporte@markelite.cl?subject=Instalar automatización" class="btn-settings-outline" style="margin-top:14px;display:inline-block;text-decoration:none">Solicitar instalación</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         AGENTE IA CONVERSACIONAL 24/7
+    ══════════════════════════════════════════ -->
+    <div class="dash-section" id="section-agente-ia">
+      <div class="service-lock-overlay" id="lock-agente-ia">
+        <div class="lock-card">
+          <span class="lock-emoji">💬</span>
+          <h3>Plan Crecimiento requerido</h3>
+          <p>El Agente IA 24/7 está disponible desde el Plan Crecimiento.</p>
+          <a href="mailto:soporte@markelite.cl?subject=Quiero activar Agente IA" class="btn-unlock">Mejorar plan →</a>
+        </div>
+      </div>
+      <div class="dash-greeting">
+        <h1>Agente IA Conversacional 24/7 💬</h1>
+        <p>Todos tus canales de comunicación en un solo lugar</p>
+      </div>
+
+      <!-- Channels row -->
+      <div class="channels-grid" id="channels-grid">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Unified inbox -->
+      <div class="chat-workspace">
+        <div class="chat-sidebar-list">
+          <div class="chat-inbox-header">
+            <div class="dash-card-title">Bandeja unificada</div>
+            <div class="chat-filter-chips" id="chat-filter-chips">
+              <button class="chip active" data-channel="all">Todos</button>
+              <button class="chip" data-channel="whatsapp">💬 WA</button>
+              <button class="chip" data-channel="facebook">👤 FB</button>
+              <button class="chip" data-channel="chatweb">🌐 Web</button>
+              <button class="chip" data-channel="chatbot">🤖 Bot</button>
+              <button class="chip" data-channel="tiktok">🎵 TK</button>
+            </div>
+          </div>
+          <div class="chat-conv-list" id="chat-conv-list">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+        <div class="chat-window" id="chat-window">
+          <div class="chat-window-empty">
+            <span>💬</span>
+            <p>Selecciona una conversación</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         CRM + LEADS
+    ══════════════════════════════════════════ -->
+    <div class="dash-section" id="section-crm">
+      <div class="dash-greeting">
+        <h1>CRM + Seguimiento de Leads 🗂️</h1>
+        <p>Gestiona todo tu embudo de ventas en un solo panel</p>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi-card"><span class="kpi-icon">👥</span><div class="kpi-label">Total leads</div><div class="kpi-value" id="crm-kpi-total" data-kpi="47">0</div><span class="kpi-delta up">▲ 18% vs mes ant.</span></div>
+        <div class="kpi-card"><span class="kpi-icon">🔥</span><div class="kpi-label">Leads activos</div><div class="kpi-value" id="crm-kpi-active" data-kpi="32">0</div><span class="kpi-delta up">▲ Mes actual</span></div>
+        <div class="kpi-card"><span class="kpi-icon">✅</span><div class="kpi-label">Cerrados ganados</div><div class="kpi-value" id="crm-kpi-won" data-kpi="5">0</div><span class="kpi-delta up">▲ Este mes</span></div>
+        <div class="kpi-card"><span class="kpi-icon">📈</span><div class="kpi-label">Conversión</div><div class="kpi-value" id="crm-kpi-conv" data-kpi="34" data-kpi-suffix="%">0</div><span class="kpi-delta up">▲ Promedio</span></div>
+      </div>
+
+      <!-- Lead table controls -->
+      <div class="dash-card" style="margin-bottom:20px">
+        <div class="dash-card-header">
+          <div>
+            <div class="dash-card-title">Todos los leads</div>
+            <div class="dash-card-subtitle" id="crm-leads-count">8 leads registrados</div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <select class="crm-filter-select" id="crm-filter-status">
+              <option value="">Todos los estados</option>
+              <option>Nuevo</option>
+              <option>Contactado</option>
+              <option>Propuesta</option>
+              <option>Negociación</option>
+              <option>Cerrado ganado</option>
+              <option>Cerrado perdido</option>
+            </select>
+            <button class="dash-card-action" onclick="openLeadForm()">+ Nuevo lead</button>
+          </div>
+        </div>
+        <div class="leads-table-wrap">
+          <table class="leads-table">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Empresa</th>
+                <th>Canal</th>
+                <th>Etapa</th>
+                <th>Valor</th>
+                <th>Último contacto</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="crm-leads-tbody">
+              <!-- Rendered by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Lead detail modal -->
+      <div class="modal-overlay" id="lead-modal" style="display:none" role="dialog" aria-modal="true">
+        <div class="modal-card">
+          <div class="modal-header">
+            <h2 class="modal-title" id="lead-modal-name">Lead</h2>
+            <button class="modal-close" onclick="closeLeadModal()">✕</button>
+          </div>
+          <div class="modal-body">
+            <div class="modal-two-col">
+              <div>
+                <div class="form-row"><label class="form-label">Nombre</label><input class="form-input" id="lm-name" placeholder="Nombre completo" /></div>
+                <div class="form-row"><label class="form-label">Empresa</label><input class="form-input" id="lm-company" placeholder="Empresa" /></div>
+                <div class="form-row"><label class="form-label">Email</label><input class="form-input" type="email" id="lm-email" placeholder="email@empresa.cl" /></div>
+                <div class="form-row"><label class="form-label">Teléfono</label><input class="form-input" id="lm-phone" placeholder="+56 9 XXXX XXXX" /></div>
+                <div class="form-row"><label class="form-label">Canal</label><input class="form-input" id="lm-channel" placeholder="WhatsApp, Instagram, etc." /></div>
+                <div class="form-row">
+                  <label class="form-label">Etapa</label>
+                  <select class="form-input" id="lm-status">
+                    <option>Nuevo</option><option>Contactado</option><option>Propuesta</option><option>Negociación</option><option>Cerrado ganado</option><option>Cerrado perdido</option>
+                  </select>
+                </div>
+                <div class="form-row"><label class="form-label">Valor estimado (CLP)</label><input class="form-input" type="number" id="lm-value" placeholder="0" /></div>
+                <div class="form-row"><label class="form-label">Notas</label><textarea class="form-input" id="lm-notes" rows="3" placeholder="Observaciones..."></textarea></div>
+                <div style="display:flex;gap:10px;margin-top:8px">
+                  <button class="btn-settings-save" onclick="saveLeadModal()">Guardar cambios</button>
+                  <button class="btn-settings-outline" onclick="closeLeadModal()">Cancelar</button>
+                </div>
+              </div>
+              <div>
+                <div class="dash-card-title" style="margin-bottom:12px">Actividad</div>
+                <div class="activity-log" id="lm-activity-log">
+                  <div class="activity-item"><span class="activity-dot green"></span><div><div class="activity-desc">Lead creado</div><div class="activity-time">hoy</div></div></div>
+                </div>
+                <div style="display:flex;gap:8px;margin-top:12px">
+                  <input class="form-input" id="lm-activity-note" placeholder="Agregar nota..." style="flex:1" />
+                  <button class="btn-settings-outline" onclick="addLeadNote()">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         AUTOMATIZACIONES DE PROCESOS
+    ══════════════════════════════════════════ -->
+    <div class="dash-section" id="section-automatizaciones">
+      <div class="service-lock-overlay" id="lock-automatizaciones">
+        <div class="lock-card">
+          <span class="lock-emoji">⚙️</span>
+          <h3>Plan Crecimiento requerido</h3>
+          <p>Las automatizaciones de procesos están disponibles desde el Plan Crecimiento.</p>
+          <a href="mailto:soporte@markelite.cl?subject=Quiero activar Automatizaciones" class="btn-unlock">Mejorar plan →</a>
+        </div>
+      </div>
+      <div class="dash-greeting">
+        <h1>Automatización de Procesos ⚙️</h1>
+        <p>Todos los workflows activos en tu negocio</p>
+      </div>
+      <div class="kpi-grid">
+        <div class="kpi-card"><span class="kpi-icon">⚡</span><div class="kpi-label">Total ejecuciones</div><div class="kpi-value" data-kpi="89">0</div><span class="kpi-delta up">▲ Este mes</span></div>
+        <div class="kpi-card"><span class="kpi-icon">🟢</span><div class="kpi-label">Activas</div><div class="kpi-value" data-kpi="5">0</div><span class="kpi-delta up">de 6 totales</span></div>
+        <div class="kpi-card"><span class="kpi-icon">⏱️</span><div class="kpi-label">Horas ahorradas</div><div class="kpi-value" data-kpi="47" data-kpi-suffix="h">0</div><span class="kpi-delta up">▲ Este mes</span></div>
+        <div class="kpi-card"><span class="kpi-icon">✅</span><div class="kpi-label">Tasa de éxito</div><div class="kpi-value" data-kpi="98" data-kpi-suffix="%">0</div><span class="kpi-delta up">Promedio</span></div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-card-header">
+          <div>
+            <div class="dash-card-title">Workflows activos</div>
+            <div class="dash-card-subtitle">Usa el toggle para pausar/activar · Para modificar una automatización, contacta a Markelite</div>
+          </div>
+          <a href="mailto:soporte@markelite.cl?subject=Solicitar nueva automatización" class="dash-card-action">+ Solicitar</a>
+        </div>
+        <div id="auto-list" class="automations-full-list"></div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         PROPUESTAS
+    ══════════════════════════════════════════ -->
+    <div class="dash-section" id="section-propuestas">
+      <div class="service-lock-overlay" id="lock-propuestas">
+        <div class="lock-card">
+          <span class="lock-emoji">📄</span>
+          <h3>Plan Crecimiento requerido</h3>
+          <p>El módulo de propuestas está disponible desde el Plan Crecimiento.</p>
+          <a href="mailto:soporte@markelite.cl?subject=Quiero activar Propuestas" class="btn-unlock">Mejorar plan →</a>
+        </div>
+      </div>
+      <div class="dash-greeting">
+        <h1>Propuestas y Presupuestos 📄</h1>
+        <p>Crea, envía y rastrea propuestas profesionales para tus clientes</p>
+      </div>
+
+      <!-- Proposals list -->
+      <div class="dash-card" style="margin-bottom:20px">
+        <div class="dash-card-header">
+          <div>
+            <div class="dash-card-title">Propuestas enviadas</div>
+            <div class="dash-card-subtitle" id="prop-count">5 propuestas</div>
+          </div>
+          <button class="dash-card-action" onclick="toggleProposalForm()">+ Nueva propuesta</button>
+        </div>
+        <div class="proposals-table-wrap">
+          <table class="leads-table">
+            <thead>
+              <tr><th>Título</th><th>Cliente</th><th>Valor</th><th>Estado</th><th>Fecha</th><th></th></tr>
+            </thead>
+            <tbody id="proposals-tbody"><!-- Rendered by JS --></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Create proposal form -->
+      <div class="dash-card" id="proposal-form-card" style="display:none">
+        <div class="dash-card-header">
+          <div><div class="dash-card-title">Nueva Propuesta</div></div>
+          <button class="dash-card-action" onclick="toggleProposalForm()">✕ Cerrar</button>
+        </div>
+        <div class="proposal-form-grid">
+          <div class="proposal-form-left">
+            <div class="settings-form">
+              <div class="form-row"><label class="form-label">Título de la propuesta</label><input class="form-input" id="pf-title" placeholder="Ej: Pack Automatización Completo" /></div>
+              <div class="form-row"><label class="form-label">Nombre del cliente</label><input class="form-input" id="pf-client-name" placeholder="Nombre completo" /></div>
+              <div class="form-row"><label class="form-label">Email del cliente</label><input class="form-input" type="email" id="pf-client-email" placeholder="cliente@empresa.cl" /></div>
+              <div class="form-row"><label class="form-label">Servicios incluidos</label>
+                <div class="service-checkboxes">
+                  <label><input type="checkbox" value="Sistema IA" /> 🤖 Sistema IA</label>
+                  <label><input type="checkbox" value="Agente IA 24/7" /> 💬 Agente IA 24/7</label>
+                  <label><input type="checkbox" value="CRM + Leads" /> 🗂️ CRM + Leads</label>
+                  <label><input type="checkbox" value="Automatizaciones" /> ⚙️ Automatizaciones</label>
+                  <label><input type="checkbox" value="Propuestas" /> 📄 Propuestas</label>
+                  <label><input type="checkbox" value="Onboarding" /> 🚀 Onboarding</label>
+                  <label><input type="checkbox" value="Cobros y Facturas" /> 💳 Cobros</label>
+                  <label><input type="checkbox" value="Reportes" /> 📈 Reportes</label>
+                  <label><input type="checkbox" value="Reputación" /> ⭐ Reputación</label>
+                  <label><input type="checkbox" value="SaaS / App" /> 💻 SaaS / App</label>
+                </div>
+              </div>
+              <div class="form-row"><label class="form-label">Notas / introducción</label><textarea class="form-input" id="pf-notes" rows="4" placeholder="Mensaje personalizado para el cliente..."></textarea></div>
+              <div class="form-row-inline" style="gap:12px">
+                <div class="form-row" style="flex:1"><label class="form-label">Validez (días)</label><input class="form-input" type="number" id="pf-validity" value="30" /></div>
+                <div class="form-row" style="flex:1"><label class="form-label">Moneda</label><select class="form-input" id="pf-currency"><option value="CLP">CLP</option><option value="USD">USD</option><option value="EUR">EUR</option></select></div>
+              </div>
+              <div class="pf-items-section">
+                <div class="dash-card-title" style="margin-bottom:10px">Ítems y precios</div>
+                <div id="pf-items-list">
+                  <div class="pf-item-row"><input class="form-input" placeholder="Descripción del servicio" style="flex:2" /><input class="form-input pf-price" type="number" placeholder="0" style="flex:1" /><button class="pf-remove-btn" onclick="removePfItem(this)">✕</button></div>
+                </div>
+                <button class="btn-settings-outline" style="margin-top:8px;width:100%" onclick="addPfItem()">+ Agregar ítem</button>
+              </div>
+              <div class="pf-total-row">Total: <strong id="pf-total">$0</strong></div>
+              <div style="display:flex;gap:10px">
+                <button class="btn-settings-save" onclick="saveProposal('borrador')">💾 Guardar borrador</button>
+                <button class="btn-settings-save" style="background:var(--dash-sidebar-bg);color:#EEEFEE" onclick="saveProposal('enviada')">📤 Enviar por email</button>
+              </div>
+            </div>
+          </div>
+          <div class="proposal-preview" id="proposal-preview">
+            <div class="preview-label">Vista previa</div>
+            <div class="proposal-doc" id="proposal-doc">
+              <div class="prop-doc-header"><div class="prop-doc-company" id="prop-preview-company">Mi Empresa</div><div class="prop-doc-date" id="prop-preview-date"></div></div>
+              <div class="prop-doc-title" id="prop-preview-title">Propuesta comercial</div>
+              <div class="prop-doc-client" id="prop-preview-client">Para: —</div>
+              <div class="prop-doc-notes" id="prop-preview-notes"></div>
+              <div class="prop-doc-items" id="prop-preview-items"></div>
+              <div class="prop-doc-total">Total: <strong id="prop-preview-total">$0</strong></div>
+              <div class="prop-doc-footer">Válida por <span id="prop-preview-validity">30</span> días · Firmado por acuerdo de las partes</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         ONBOARDING
+    ══════════════════════════════════════════ -->
+    <div class="dash-section" id="section-onboarding">
+      <div class="service-lock-overlay" id="lock-onboarding">
+        <div class="lock-card">
+          <span class="lock-emoji">🚀</span>
+          <h3>Plan Completo requerido</h3>
+          <p>El módulo de onboarding está disponible en el Plan Completo.</p>
+          <a href="mailto:soporte@markelite.cl?subject=Quiero activar Onboarding" class="btn-unlock">Mejorar plan →</a>
+        </div>
+      </div>
+      <div class="dash-greeting">
+        <h1>Onboarding para tus Clientes 🚀</h1>
+        <p>Configura el proceso de bienvenida que verán los clientes de tu empresa</p>
+      </div>
+      <div class="dash-lower-row">
+        <!-- Step builder -->
+        <div class="dash-card">
+          <div class="dash-card-header">
+            <div>
+              <div class="dash-card-title">Constructor de pasos</div>
+              <div class="dash-card-subtitle">Arrastra para reordenar</div>
+            </div>
+            <button class="dash-card-action" onclick="addOnboardingStep()">+ Agregar paso</button>
+          </div>
+          <div id="onboarding-steps-list" class="onboarding-steps-list">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+        <!-- Preview -->
+        <div class="dash-card">
+          <div class="dash-card-header">
+            <div><div class="dash-card-title">Vista previa del cliente</div></div>
+          </div>
+          <div class="onboarding-preview" id="onboarding-preview">
+            <!-- Rendered by JS -->
+          </div>
+          <div style="margin-top:16px">
+            <div class="form-row"><label class="form-label">Título del flujo</label><input class="form-input" id="ob-flow-title" placeholder="Bienvenida a Mi Empresa" /></div>
+            <button class="btn-settings-save" style="margin-top:10px" onclick="saveOnboardingFlow()">Guardar configuración</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         COBROS Y FACTURAS
+    ══════════════════════════════════════════ -->
+    <div class="dash-section" id="section-cobros">
+      <div class="service-lock-overlay" id="lock-cobros">
+        <div class="lock-card">
+          <span class="lock-emoji">💳</span>
+          <h3>Plan Crecimiento requerido</h3>
+          <p>El módulo de facturación está disponible desde el Plan Crecimiento.</p>
+          <a href="mailto:soporte@markelite.cl?subject=Quiero activar Facturación" class="btn-unlock">Mejorar plan →</a>
+        </div>
+      </div>
+      <div class="dash-greeting">
+        <h1>Cobros y Facturación 💳</h1>
+        <p>Emite facturas y cobra automáticamente a tus propios clientes</p>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi-card"><span class="kpi-icon">💰</span><div class="kpi-label">Facturado este mes</div><div class="kpi-value" data-kpi-prefix="$" data-kpi="3.67" data-kpi-suffix="M">$0</div><span class="kpi-delta up">▲ Emitido</span></div>
+        <div class="kpi-card"><span class="kpi-icon">✅</span><div class="kpi-label">Cobrado</div><div class="kpi-value" data-kpi-prefix="$" data-kpi="1.2" data-kpi-suffix="M">$0</div><span class="kpi-delta up">▲ Recibido</span></div>
+        <div class="kpi-card"><span class="kpi-icon">⏳</span><div class="kpi-label">Pendiente de cobro</div><div class="kpi-value" data-kpi-prefix="$" data-kpi="2.35" data-kpi-suffix="M">$0</div><span class="kpi-delta neutral">→ En proceso</span></div>
+        <div class="kpi-card"><span class="kpi-icon">🔴</span><div class="kpi-label">Vencido</div><div class="kpi-value" data-kpi-prefix="$" data-kpi="2.1" data-kpi-suffix="M">$0</div><span class="kpi-delta down">▼ Requiere atención</span></div>
+      </div>
+
+      <div class="dash-lower-row">
+        <!-- Invoice list -->
+        <div class="dash-card">
+          <div class="dash-card-header">
+            <div>
+              <div class="dash-card-title">Facturas emitidas</div>
+              <div class="dash-card-subtitle" id="invoices-count">5 facturas</div>
+            </div>
+            <div style="display:flex;gap:8px">
+              <select class="crm-filter-select" id="invoice-filter-status" onchange="filterInvoices()">
+                <option value="">Todas</option>
+                <option value="pendiente">Pendientes</option>
+                <option value="pagada">Pagadas</option>
+                <option value="vencida">Vencidas</option>
+              </select>
+              <button class="dash-card-action" onclick="toggleInvoiceForm()">+ Nueva</button>
+            </div>
+          </div>
+          <div class="leads-table-wrap">
+            <table class="leads-table">
+              <thead><tr><th>N°</th><th>Cliente</th><th>Concepto</th><th>Monto</th><th>Vencimiento</th><th>Estado</th><th></th></tr></thead>
+              <tbody id="invoices-tbody"><!-- Rendered by JS --></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Create invoice form -->
+      <div class="dash-card" id="invoice-form-card" style="display:none;margin-top:20px">
+        <div class="dash-card-header">
+          <div><div class="dash-card-title">Nueva Factura</div></div>
+          <button class="dash-card-action" onclick="toggleInvoiceForm()">✕</button>
+        </div>
+        <div class="settings-grid">
+          <div class="settings-form">
+            <div class="form-row"><label class="form-label">Cliente</label><input class="form-input" id="inv-client-name" placeholder="Nombre del cliente" /></div>
+            <div class="form-row"><label class="form-label">Email del cliente</label><input class="form-input" type="email" id="inv-client-email" placeholder="cliente@empresa.cl" /></div>
+            <div class="form-row"><label class="form-label">Concepto</label><input class="form-input" id="inv-concept" placeholder="Descripción del servicio" /></div>
+            <div class="form-row"><label class="form-label">Monto total (CLP)</label><input class="form-input" type="number" id="inv-amount" placeholder="0" /></div>
+            <div class="form-row"><label class="form-label">Fecha de vencimiento</label><input class="form-input" type="date" id="inv-due-date" /></div>
+            <div class="form-row"><label class="form-label">Notas internas</label><textarea class="form-input" id="inv-notes" rows="3" placeholder="Observaciones..."></textarea></div>
+            <div style="display:flex;gap:10px">
+              <button class="btn-settings-save" onclick="saveInvoice('pendiente')">💾 Guardar y emitir</button>
+              <button class="btn-settings-save" style="background:var(--dash-sidebar-bg);color:#EEEFEE" onclick="saveInvoice('borrador')">Guardar borrador</button>
+            </div>
+          </div>
+          <div>
+            <div class="dash-card-title" style="margin-bottom:14px">Plantilla de email de cobro</div>
+            <div class="form-row"><label class="form-label">Asunto</label><input class="form-input" id="inv-email-subject" value="Factura pendiente de pago — {{empresa}}" /></div>
+            <div class="form-row"><label class="form-label">Mensaje</label><textarea class="form-input" id="inv-email-body" rows="6">Estimado {{nombre}},
+
+Se adjunta la factura N° {{numero}} por un monto de {{monto}} con vencimiento el {{fecha}}.
+
+Si ya realizaste el pago, por favor ignora este mensaje.
+
+Saludos,
+{{empresa}}</textarea></div>
+            <p class="form-hint">Variables disponibles: {{nombre}}, {{empresa}}, {{monto}}, {{fecha}}, {{numero}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         REPORTES AUTOMÁTICOS
+    ══════════════════════════════════════════ -->
+    <div class="dash-section" id="section-reportes">
+      <div class="dash-greeting">
+        <h1>Reportes Automáticos 📈</h1>
+        <p>Tus métricas clave, siempre disponibles y enviadas automáticamente</p>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi-card"><span class="kpi-icon">👥</span><div class="kpi-label">Leads este mes</div><div class="kpi-value" id="rep-kpi-leads" data-kpi="47">0</div><span class="kpi-delta up">▲ 18% vs mes ant.</span></div>
+        <div class="kpi-card"><span class="kpi-icon">💬</span><div class="kpi-label">Conversaciones</div><div class="kpi-value" id="rep-kpi-conv" data-kpi="312">0</div><span class="kpi-delta up">▲ 6% vs mes ant.</span></div>
+        <div class="kpi-card"><span class="kpi-icon">⚡</span><div class="kpi-label">Automatizaciones</div><div class="kpi-value" id="rep-kpi-auto" data-kpi="89">0</div><span class="kpi-delta up">▲ 24% vs mes ant.</span></div>
+        <div class="kpi-card"><span class="kpi-icon">⚡</span><div class="kpi-label">Respuesta promedio</div><div class="kpi-value" id="rep-kpi-resp" data-kpi="1.8" data-kpi-suffix=" min">0</div><span class="kpi-delta up">▼ 40% más rápido</span></div>
+      </div>
+
+      <div class="dash-lower-row">
+        <!-- Evolution chart -->
+        <div class="dash-card">
+          <div class="dash-card-header">
+            <div><div class="dash-card-title">Evolución de leads (6 meses)</div></div>
+          </div>
+          <div class="bar-chart-wrap" id="rep-bar-chart"></div>
+        </div>
+        <!-- Report history -->
+        <div class="dash-card">
+          <div class="dash-card-header">
+            <div>
+              <div class="dash-card-title">Historial de reportes</div>
+              <div class="dash-card-subtitle">Enviados automáticamente</div>
+            </div>
+          </div>
+          <div id="reports-history-list" class="reports-list"><!-- Rendered by JS --></div>
+        </div>
+      </div>
+
+      <!-- WhatsApp config -->
+      <div class="dash-card" style="margin-top:0">
+        <div class="dash-card-header">
+          <div>
+            <div class="dash-card-title">Configuración de envío</div>
+            <div class="dash-card-subtitle">Define cómo y cuándo recibes tus reportes</div>
+          </div>
+        </div>
+        <div class="settings-grid">
+          <div class="settings-form">
+            <div class="form-row"><label class="form-label">Número WhatsApp para reportes</label><input class="form-input" id="rep-wa-number" type="tel" placeholder="+56 9 XXXX XXXX" /></div>
+            <div class="form-row">
+              <label class="form-label">Frecuencia de envío</label>
+              <select class="form-input" id="rep-frequency">
+                <option value="semanal">Semanal (cada lunes)</option>
+                <option value="quincenal">Quincenal</option>
+                <option value="mensual">Mensual (día 1)</option>
+              </select>
+            </div>
+            <button class="btn-settings-save" onclick="saveReportConfig()">Guardar configuración</button>
+          </div>
+          <div style="padding:16px;background:var(--dash-bg);border-radius:12px;border:1px solid var(--dash-border)">
+            <div class="dash-card-title" style="margin-bottom:8px">¿Qué incluye el reporte?</div>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:8px">
+              <li style="font-size:0.875rem;display:flex;align-items:center;gap:8px"><span>📊</span> KPIs de la semana/mes</li>
+              <li style="font-size:0.875rem;display:flex;align-items:center;gap:8px"><span>👥</span> Nuevos leads y su estado</li>
+              <li style="font-size:0.875rem;display:flex;align-items:center;gap:8px"><span>⚡</span> Automatizaciones ejecutadas</li>
+              <li style="font-size:0.875rem;display:flex;align-items:center;gap:8px"><span>💬</span> Conversaciones atendidas</li>
+              <li style="font-size:0.875rem;display:flex;align-items:center;gap:8px"><span>⭐</span> Reseñas recibidas</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         GESTIÓN DE REPUTACIÓN
+    ══════════════════════════════════════════ -->
+    <div class="dash-section" id="section-reputacion">
+      <div class="service-lock-overlay" id="lock-reputacion">
+        <div class="lock-card">
+          <span class="lock-emoji">⭐</span>
+          <h3>Plan Completo requerido</h3>
+          <p>La gestión de reputación está disponible en el Plan Completo.</p>
+          <a href="mailto:soporte@markelite.cl?subject=Quiero activar Reputación" class="btn-unlock">Mejorar plan →</a>
+        </div>
+      </div>
+      <div class="dash-greeting">
+        <h1>Gestión de Reputación ⭐</h1>
+        <p>Monitorea y responde todas tus reseñas desde un solo panel</p>
+      </div>
+
+      <!-- Score + KPIs -->
+      <div class="rep-overview">
+        <div class="dash-card rep-score-card">
+          <div class="dash-card-title" style="margin-bottom:16px">Puntuación general</div>
+          <div class="rep-gauge-wrap">
+            <svg class="rep-gauge-svg" viewBox="0 0 120 70" width="180">
+              <path class="rep-gauge-bg" d="M10 65 A 50 50 0 0 1 110 65" fill="none" stroke="rgba(0,0,0,0.08)" stroke-width="12" stroke-linecap="round"/>
+              <path class="rep-gauge-fill" id="rep-gauge-path" d="M10 65 A 50 50 0 0 1 110 65" fill="none" stroke="#F2B500" stroke-width="12" stroke-linecap="round" stroke-dasharray="0 157"/>
+            </svg>
+            <div class="rep-gauge-label"><span id="rep-score-value">4.6</span><small>/ 5.0</small></div>
+          </div>
+          <div class="rep-stars" id="rep-stars">⭐⭐⭐⭐⭐</div>
+          <div style="font-size:0.8125rem;color:var(--dash-text-soft);margin-top:8px">Basado en 6 reseñas</div>
+        </div>
+        <div class="kpi-grid" style="grid-template-columns:repeat(2,1fr);flex:1">
+          <div class="kpi-card"><span class="kpi-icon">📝</span><div class="kpi-label">Total reseñas</div><div class="kpi-value" data-kpi="6">0</div><span class="kpi-delta up">▲ Acumuladas</span></div>
+          <div class="kpi-card"><span class="kpi-icon">⭐</span><div class="kpi-label">Promedio</div><div class="kpi-value" data-kpi="4.6">0</div><span class="kpi-delta up">▲ Excelente</span></div>
+          <div class="kpi-card"><span class="kpi-icon">📅</span><div class="kpi-label">Esta semana</div><div class="kpi-value" data-kpi="2">0</div><span class="kpi-delta up">▲ Nuevas</span></div>
+          <div class="kpi-card"><span class="kpi-icon">💚</span><div class="kpi-label">% Positivas</div><div class="kpi-value" data-kpi="83" data-kpi-suffix="%">0</div><span class="kpi-delta up">▲ 4-5 estrellas</span></div>
+        </div>
+      </div>
+
+      <!-- Star distribution -->
+      <div class="dash-lower-row" style="margin-top:20px">
+        <div class="dash-card">
+          <div class="dash-card-title" style="margin-bottom:16px">Distribución de estrellas</div>
+          <div class="star-dist-list">
+            <div class="star-dist-row"><span>5⭐</span><div class="star-bar-wrap"><div class="star-bar" data-pct="67" style="background:#28c840"></div></div><span>67%</span></div>
+            <div class="star-dist-row"><span>4⭐</span><div class="star-bar-wrap"><div class="star-bar" data-pct="16" style="background:#8fce00"></div></div><span>16%</span></div>
+            <div class="star-dist-row"><span>3⭐</span><div class="star-bar-wrap"><div class="star-bar" data-pct="17" style="background:#F2B500"></div></div><span>17%</span></div>
+            <div class="star-dist-row"><span>2⭐</span><div class="star-bar-wrap"><div class="star-bar" data-pct="0" style="background:#ff8c00"></div></div><span>0%</span></div>
+            <div class="star-dist-row"><span>1⭐</span><div class="star-bar-wrap"><div class="star-bar" data-pct="0" style="background:#ff6b6b"></div></div><span>0%</span></div>
+          </div>
+        </div>
+
+        <!-- Request review -->
+        <div class="dash-card">
+          <div class="dash-card-title" style="margin-bottom:14px">Solicitar reseña</div>
+          <div class="settings-form">
+            <div class="form-row"><label class="form-label">Cliente</label><input class="form-input" id="req-client" placeholder="Nombre del cliente" /></div>
+            <div class="form-row">
+              <label class="form-label">Plataforma</label>
+              <select class="form-input" id="req-platform">
+                <option value="google">Google Business</option>
+                <option value="facebook">Facebook</option>
+                <option value="tripadvisor">TripAdvisor</option>
+              </select>
+            </div>
+            <div class="form-row"><label class="form-label">Mensaje (opcional)</label><textarea class="form-input" id="req-message" rows="3" placeholder="Estimado {{nombre}}, nos encantaría conocer tu opinión..."></textarea></div>
+            <button class="btn-settings-save" onclick="sendReviewRequest()">📤 Enviar solicitud por WhatsApp</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reviews feed -->
+      <div class="dash-card" style="margin-top:20px">
+        <div class="dash-card-header">
+          <div><div class="dash-card-title">Feed de reseñas</div></div>
+        </div>
+        <div id="reviews-list" class="reviews-list"><!-- Rendered by JS --></div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         MI CUENTA (PERFIL)
+    ══════════════════════════════════════════ -->
+    <div class="dash-section" id="section-cuenta">
+      <div class="dash-greeting"><h1>Mi Perfil 👤</h1><p>Información de tu cuenta y empresa.</p></div>
+      <div class="settings-grid">
+        <div class="dash-card settings-card">
+          <div class="dash-card-header"><div><div class="dash-card-title">Datos personales</div><div class="dash-card-subtitle">Tu información de acceso</div></div></div>
+          <form id="form-account" class="settings-form">
+            <div class="form-row"><label class="form-label">Nombre completo</label><input id="acc-owner-name" type="text" class="form-input" placeholder="Tu nombre" /></div>
+            <div class="form-row"><label class="form-label">Email</label><input id="acc-owner-email" type="email" class="form-input" placeholder="tu@empresa.com" /></div>
+            <div class="form-row"><label class="form-label">Nombre de empresa</label><input id="acc-company-name" type="text" class="form-input" placeholder="Mi Empresa SpA" /></div>
+            <div class="form-row"><label class="form-label">Moneda</label>
+              <select id="acc-currency" class="form-input">
+                <option value="CLP">CLP — Peso chileno</option>
+                <option value="USD">USD — Dólar</option>
+                <option value="EUR">EUR — Euro</option>
+                <option value="MXN">MXN — Peso mexicano</option>
+              </select>
+            </div>
+            <button type="submit" class="btn-settings-save">Guardar cambios</button>
+          </form>
+        </div>
+        <div class="dash-card settings-card">
+          <div class="dash-card-header"><div><div class="dash-card-title">Plan activo</div><div class="dash-card-subtitle">Gestionado por Markelite</div></div></div>
+          <div class="plan-display">
+            <div class="plan-badge"><span class="plan-icon">⚡</span><span class="plan-name" id="acc-plan-name">Crecimiento</span></div>
+            <p class="plan-desc">Automatizaciones activas, reportes mensuales, soporte dedicado.</p>
+            <a href="mailto:soporte@markelite.cl?subject=Quiero mejorar mi plan" class="btn-plan-upgrade">Actualizar plan →</a>
+          </div>
+          <div class="dash-card-header" style="margin-top:24px;border-top:1px solid var(--dash-border);padding-top:20px"><div><div class="dash-card-title">Seguridad</div></div></div>
+          <div class="security-actions">
+            <button class="btn-settings-outline" onclick="showToast('Solicita el cambio a soporte@markelite.cl','success')">🔐 Cambiar contraseña</button>
+            <button class="btn-settings-outline danger" onclick="if(confirm('¿Cerrar sesión en todos los dispositivos?')){MklAuth.signOut();}">🚪 Cerrar todas las sesiones</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         EQUIPO
+    ══════════════════════════════════════════ -->
+    <div class="dash-section" id="section-equipo">
+      <div class="dash-greeting"><h1>Equipo 🤝</h1><p>Agrega personas de tu equipo para que accedan al dashboard.</p></div>
+      <div class="settings-grid">
+        <div class="dash-card settings-card">
+          <div class="dash-card-header"><div><div class="dash-card-title">Agregar miembro</div></div></div>
+          <form id="form-team" class="settings-form">
+            <div class="form-row"><label class="form-label">Nombre</label><input id="team-name-inp" type="text" class="form-input" placeholder="María González" required /></div>
+            <div class="form-row"><label class="form-label">Email</label><input id="team-email-inp" type="email" class="form-input" placeholder="maria@empresa.com" required /></div>
+            <div class="form-row"><label class="form-label">Rol</label>
+              <select id="team-role-inp" class="form-input">
+                <option value="Visualizador">Visualizador (solo lectura)</option>
+                <option value="Editor">Editor</option>
+                <option value="Admin">Admin</option>
+              </select>
+            </div>
+            <button type="submit" class="btn-settings-save">Agregar miembro</button>
+          </form>
+        </div>
+        <div class="dash-card settings-card">
+          <div class="dash-card-header"><div><div class="dash-card-title">Miembros del equipo</div></div></div>
+          <div id="team-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         INTEGRACIONES
+    ══════════════════════════════════════════ -->
+    <div class="dash-section" id="section-integraciones">
+      <div class="dash-greeting"><h1>Integraciones 🔌</h1><p>Conecta tu dashboard con las herramientas de Markelite.</p></div>
+      <div class="settings-grid-full">
+        <div class="dash-card settings-card">
+          <div class="dash-card-header">
+            <div><div class="dash-card-title">Fuente de datos (n8n)</div><div class="dash-card-subtitle">URL base del webhook de tu instancia n8n</div></div>
+            <span id="data-status-badge-int" class="data-status-badge demo">● Desconectado</span>
+          </div>
+          <form id="form-integrations" class="settings-form">
+            <div class="form-row"><label class="form-label">URL base n8n</label><input id="int-n8n-url" type="url" class="form-input" placeholder="https://n8n.tudominio.com/webhook" /><span class="form-hint">Los KPIs se consultarán desde esta URL cada 30 segundos.</span></div>
+            <div class="form-row-inline">
+              <button type="button" id="btn-test-connection" class="btn-settings-outline">Probar conexión</button>
+              <button type="submit" class="btn-settings-save">Guardar</button>
+            </div>
+          </form>
+        </div>
+        <div class="dash-card settings-card" style="margin-top:16px">
+          <div class="dash-card-header"><div><div class="dash-card-title">GoHighLevel</div><div class="dash-card-subtitle">API key para sincronizar contactos, citas y pipeline</div></div></div>
+          <div class="settings-form">
+            <div class="form-row"><label class="form-label">API Key (GHL)</label><input id="int-ghl-key" type="password" class="form-input" placeholder="••••••••••••••••" autocomplete="off" /></div>
+            <div class="form-row"><label class="form-label">Location ID</label><input id="int-ghl-loc" type="text" class="form-input" placeholder="abc123def456" /></div>
+            <div class="integration-note"><span>ℹ️</span><span>Las credenciales de GHL se envían a través de tu instancia n8n, nunca directamente desde el browser. Seguro por diseño.</span></div>
+          </div>
+        </div>
+        <div class="dash-card settings-card" style="margin-top:16px">
+          <div class="dash-card-header"><div><div class="dash-card-title">Estructura esperada de la API</div><div class="dash-card-subtitle">Tu n8n debe devolver este JSON en <code>/kpis?client=ID</code></div></div></div>
+          <pre class="code-block">{"contacts": 47, "pipeline": "4.2M", "appointments": 23, "conversion": 34}</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         MARCA & APARIENCIA
+    ══════════════════════════════════════════ -->
+    <div class="dash-section" id="section-marca">
+      <div class="dash-greeting"><h1>Marca & Apariencia 🎨</h1><p>Personaliza el dashboard con los colores y logo de tu empresa.</p></div>
+      <div class="settings-grid">
+        <div class="dash-card settings-card">
+          <div class="dash-card-header"><div><div class="dash-card-title">Identidad visual</div></div></div>
+          <form id="form-brand" class="settings-form">
+            <div class="form-row"><label class="form-label">Nombre de empresa</label><input id="brand-company-name" type="text" class="form-input" placeholder="Mi Empresa" /></div>
+            <div class="form-row"><label class="form-label">Logo (URL de imagen)</label><input id="brand-logo-url" type="url" class="form-input" placeholder="https://miempresa.com/logo.png" /><span class="form-hint">PNG o SVG con fondo transparente, 400×120 px ideal.</span></div>
+            <div style="margin:4px 0 12px"><img id="brand-logo-preview" src="" alt="Logo preview" class="brand-logo-preview" style="display:none" /></div>
+            <div class="form-row-colors">
+              <div class="form-row"><label class="form-label">Color primario</label><div class="color-input-wrap"><input id="brand-primary-color" type="color" class="form-color" value="#EBEB81" /><input type="text" class="form-input color-hex" placeholder="#EBEB81" /></div></div>
+              <div class="form-row"><label class="form-label">Color acento</label><div class="color-input-wrap"><input id="brand-accent-color" type="color" class="form-color" value="#FACC7B" /><input type="text" class="form-input color-hex" placeholder="#FACC7B" /></div></div>
+            </div>
+            <button type="submit" class="btn-settings-save">Aplicar marca</button>
+          </form>
+        </div>
+        <div class="dash-card settings-card">
+          <div class="dash-card-header"><div><div class="dash-card-title">Vista previa</div></div></div>
+          <div class="brand-preview">
+            <div id="brand-color-preview" class="brand-gradient-preview"></div>
+            <div class="brand-preview-kpi"><div class="brand-preview-kpi-bar"></div><div class="brand-preview-kpi-bar short"></div><div class="brand-preview-kpi-bar medium"></div></div>
+            <p class="brand-preview-label">Los cambios se aplican instantáneamente al guardar.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         SUSCRIPCIÓN (con Markelite)
+    ══════════════════════════════════════════ -->
+    <div class="dash-section" id="section-suscripcion">
+      <div class="dash-greeting"><h1>Mi Suscripción 📋</h1><p>Historial de pagos y gestión de tu plan con Markelite.</p></div>
+      <div class="settings-grid">
+        <div class="dash-card settings-card">
+          <div class="dash-card-header"><div><div class="dash-card-title">Método de pago</div><div class="dash-card-subtitle">Gestionado directamente por Markelite</div></div></div>
+          <div class="billing-method">
+            <div class="billing-method-icon">💳</div>
+            <div>
+              <div class="billing-method-label">Cobro manual por Markelite</div>
+              <div class="billing-method-sub">Tu plan es facturado directamente por el equipo de Markelite.<br>¿Preguntas sobre tu factura? Escríbenos a soporte@markelite.cl</div>
+            </div>
+          </div>
+          <button class="btn-settings-outline" style="margin-top:16px" onclick="window.open('mailto:soporte@markelite.cl?subject=Facturación Markelite')">📧 Contactar facturación</button>
+        </div>
+        <div class="dash-card settings-card">
+          <div class="dash-card-header"><div><div class="dash-card-title">Historial de pagos</div></div></div>
+          <div class="billing-history">
+            <div class="billing-row"><div><div class="billing-desc">Plan Crecimiento — Junio 2026</div><div class="billing-date">01 Jun 2026</div></div><span class="billing-status paid">Pagado</span></div>
+            <div class="billing-row"><div><div class="billing-desc">Plan Crecimiento — Mayo 2026</div><div class="billing-date">01 May 2026</div></div><span class="billing-status paid">Pagado</span></div>
+            <div class="billing-row"><div><div class="billing-desc">Plan Crecimiento — Abril 2026</div><div class="billing-date">01 Abr 2026</div></div><span class="billing-status paid">Pagado</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.dash-content -->
+</div><!-- /.dash-main -->
+
+<script src="js/supabase-client.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>

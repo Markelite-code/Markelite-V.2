@@ -1,0 +1,211 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <script src="js/theme-init.js"></script>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' cdn.jsdelivr.net cdnjs.cloudflare.com www.googletagmanager.com www.google-analytics.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' *.supabase.co wss://*.supabase.co www.google-analytics.com analytics.google.com; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self';">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Página no encontrada — Markelite</title>
+  <meta name="robots" content="noindex" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rem:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Syne:wght@400;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/variables.css" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--brand-black);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px var(--container-pad);
+    }
+
+    .e404-logo {
+      font-family: var(--font-display);
+      font-size: 1.375rem;
+      font-weight: 700;
+      color: var(--brand-white);
+      position: fixed;
+      top: 24px;
+      left: var(--container-pad);
+      text-decoration: none;
+    }
+
+    .e404-logo .logo-dot { color: var(--brand-yellow); }
+
+    .e404-number {
+      font-family: var(--font-display);
+      font-size: clamp(6.25rem, 20vw, 11.25rem);
+      font-weight: 700;
+      color: var(--brand-white);
+      line-height: 1;
+      opacity: 0.06;
+      position: absolute;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .e404-content {
+      position: relative;
+      z-index: 1;
+      max-width: 480px;
+    }
+
+    .e404-icon {
+      font-size: 4rem;
+      margin-bottom: 24px;
+      display: block;
+    }
+
+    .e404-eyebrow {
+      display: block;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--brand-yellow);
+      margin-bottom: 12px;
+    }
+
+    .e404-content h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 5vw, 2.75rem);
+      font-weight: 700;
+      color: var(--brand-white);
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+
+    .e404-content p {
+      font-size: 1rem;
+      color: var(--gray-mid);
+      line-height: 1.65;
+      margin-bottom: 36px;
+    }
+
+    .e404-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .e404-btn-primary {
+      display: inline-block;
+      background: var(--brand-yellow);
+      color: var(--brand-black);
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      padding: 13px 24px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .e404-btn-primary:hover {
+      background: var(--brand-yellow-warm);
+      transform: translateY(-2px);
+    }
+
+    .e404-btn-ghost {
+      display: inline-block;
+      background: transparent;
+      color: rgba(238,239,238,0.7);
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      padding: 13px 24px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.15);
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .e404-btn-ghost:hover {
+      border-color: rgba(255,255,255,0.4);
+      color: var(--brand-white);
+    }
+
+    .e404-links {
+      margin-top: 48px;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .e404-links a {
+      font-size: 0.8125rem;
+      color: var(--gray-mid);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .e404-links a:hover { color: var(--brand-white); }
+
+    /* Auto-redirect countdown */
+    .e404-redirect {
+      margin-top: 20px;
+      font-size: 0.8125rem;
+      color: rgba(136,135,128,0.5);
+    }
+
+    #countdown { color: var(--brand-yellow); font-weight: 600; }
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9XCY1FMESR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9XCY1FMESR');
+  </script>
+</head>
+<body>
+
+  <a href="index.html" class="e404-logo">Markelite<span class="logo-dot">.</span></a>
+
+  <div class="e404-number">404</div>
+
+  <div class="e404-content">
+    <span class="e404-icon">🛸</span>
+    <span class="e404-eyebrow">Error 404</span>
+    <h1>Esta página<br>no existe.</h1>
+    <p>Parece que la página que buscas se perdió en el universo digital. Puede que haya cambiado de URL o simplemente volado por los aires.</p>
+
+    <div class="e404-actions">
+      <a href="index.html" class="e404-btn-primary">Volver al inicio</a>
+      <a href="diagnostico.html" class="e404-btn-ghost">Diagnóstico gratis</a>
+    </div>
+
+    <div class="e404-links">
+      <a href="/#servicios">Servicios</a>
+      <a href="/#precios">Planes</a>
+      <a href="blog/index.html">Blog</a>
+      <a href="/#contacto">Contacto</a>
+    </div>
+
+    <p class="e404-redirect">Serás redirigido al inicio en <span id="countdown">10</span> segundos.</p>
+  </div>
+
+  <script>
+    let t = 10;
+    const el = document.getElementById('countdown');
+    const iv = setInterval(() => {
+      el.textContent = --t;
+      if (t <= 0) { clearInterval(iv); window.location.href = '/'; }
+    }, 1000);
+  </script>
+</body>
+</html>
